@@ -16,14 +16,6 @@ export default function Header() {
       title: "Time Tracker",
       href: paths.timeTracker.timeTracker(),
     },
-    {
-      title: "Dienst Plan",
-      href: paths.dienstPlan.dienstPlan(),
-    },
-    {
-      title: "Work and Travel",
-      href: paths.workAndTravel.workAndTravel(),
-    },
   ];
 
   return (
@@ -50,20 +42,6 @@ export default function Header() {
           <Chip>
             <Link color="secondary" href={paths.timeTracker.timeTracker()}>
               Time Tracker
-            </Link>
-          </Chip>
-        </NavbarItem>
-        <NavbarItem>
-          <Chip>
-            <Link color="secondary" href={paths.workAndTravel.workAndTravel()}>
-              Work + Travel
-            </Link>
-          </Chip>
-        </NavbarItem>
-        <NavbarItem>
-          <Chip>
-            <Link color="secondary" href={paths.dienstPlan.dienstPlan()}>
-              Dienst Plan
             </Link>
           </Chip>
         </NavbarItem>

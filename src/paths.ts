@@ -20,29 +20,6 @@ const paths = {
       return 'time-tracker/projects/overview';
     }
   },
-
-  typeSpeed: {
-    typeSpeed() {
-      return '/type-speed';
-    }
-  },
-
-  workAndTravel: {
-    workAndTravel() {
-      return `/work+travel`;
-    },
-    showVanSpot(spotId: number) {
-      return `/work+travel/van-spot/${spotId}`;
-    }
-  },
-  dienstPlan: {
-    dienstPlan() {
-      return '/dienst-plan';
-    },
-    showDienstPlan(dienstPlanId: number) {
-      return `/dienst-plan/${dienstPlanId}`;
-    }
-  }
 };
 
 export default paths;
