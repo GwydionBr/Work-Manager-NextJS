@@ -1,0 +1,79 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+
+model TimerProject {
+  id                    Int           @id @default(autoincrement())
+  project_name          String        @unique
+  project_description   String
+  project_salary        Float
+  sessions              TimerSession[]
+}
+
+model TimerSession {
+  id                    Int           @id @default(autoincrement())
+  time_spent            Int
+  money_earned          Float
+  session_date          DateTime
+  project               TimerProject  @relation(fields: [project_id], references: [id])
+  project_id            Int
+}
+
+model VanSpot {
+  id                    Int           @id @default(autoincrement())
+  spot_name             String        @unique
+  spot_description      String      
+  general_rating        Int
+  internet_rating       Int
+  image_url             String
+  location              String
+}
+
+model DienstPlan {
+  id                    Int           @id @default(autoincrement())
+  name                  String        @unique
+  fixed_workers         DienstFixedWorker[]
+  relativeWorkers       DienstRelativeWorker[]
+  departments           DienstDepartment[]
+}
+
+model DienstFixedWorker {
+  id                    Int           @id @default(autoincrement())
+  user_name             String        @unique
+  holiday_year          Int 
+  working_hours_week    Int 
+  dienst_plan           DienstPlan    @relation(fields: [dienst_plan_id], references: [id])
+  dienst_plan_id        Int
+}
+
+model DienstRelativeWorker {
+  id                    Int           @id @default(autoincrement())
+  user_name             String        @unique
+  working_hours_month   Int
+  dienst_plan           DienstPlan    @relation(fields: [dienst_plan_id], references: [id])
+  dienst_plan_id        Int
+}
+
+model DienstDepartment {
+  id                    Int           @id @default(autoincrement())
+  department_name       String        @unique
+  department_short      String        @unique
+  start_time_summer     DateTime @db.Time()
+  end_time_summer       DateTime @db.Time()
+  start_time_winter     DateTime @db.Time()
+  end_time_winter       DateTime @db.Time()
+  dienst_plan           DienstPlan    @relation(fields: [dienst_plan_id], references: [id])
+  dienst_plan_id        Int
+}
