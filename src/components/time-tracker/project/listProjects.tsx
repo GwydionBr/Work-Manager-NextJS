@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { Button, Divider } from '@nextui-org/react';
+import { Divider } from '@nextui-org/react';
+import { Button } from '@nextui-org/button';
 import { db } from '@/db';
 import paths from '@/paths';
 import EditProjectForm from '@/components/time-tracker/forms/editProjectForm';

@@ -3,11 +3,12 @@
 import type { TimerSession } from "@prisma/client";
 import {
   Input,
-  Button,
   Popover,
   PopoverTrigger,
   PopoverContent,
 } from '@nextui-org/react';
+import { Button } from '@nextui-org/button';
+
 import { useState } from 'react';
 import EditIcon from '@mui/icons-material/Edit';
 import * as actions from '@/actions';

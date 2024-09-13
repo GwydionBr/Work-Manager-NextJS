@@ -1,12 +1,12 @@
 "use client";
 
 import {
-  Button,
   Input,
   Popover,
   PopoverTrigger,
   PopoverContent,
 } from '@nextui-org/react';
+import { Button } from '@nextui-org/button';
 import { useState } from 'react';
 import { DatePicker } from "@nextui-org/date-picker";
 import * as actions from '@/actions/time_tracker/createSession';

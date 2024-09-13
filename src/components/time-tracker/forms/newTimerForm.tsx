@@ -1,11 +1,11 @@
 "use client";
 
 import {
-  Button,
   Popover,
   PopoverTrigger,
   PopoverContent,
 } from '@nextui-org/react';
+import { Button } from '@nextui-org/button';
 import { useState, useEffect } from "react";
 import StartButton from "@/components/common/startButton";
 import PauseButton from "@/components/common/pauseButton";

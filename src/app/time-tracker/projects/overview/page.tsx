@@ -1,5 +1,6 @@
 import ListSessions from "@/components/time-tracker/session/listSessions";
-import { Button, Link } from "@nextui-org/react";
+import { Link } from "@nextui-org/react";
+import {Button} from "@nextui-org/button";
 import paths from "@/paths";
 import type { TimerSession } from '@prisma/client';
 import OverviewHeader from "@/components/time-tracker/headers/overviewHeader";

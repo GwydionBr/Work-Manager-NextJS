@@ -1,7 +1,8 @@
 "use client";
 
 import React from "react";
-import {Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, Link, Button, Chip} from "@nextui-org/react";
+import {Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, Link, Chip} from "@nextui-org/react";
+import {Button} from "@nextui-org/button";
 import paths from "@/paths";
 
 export default function Header() {

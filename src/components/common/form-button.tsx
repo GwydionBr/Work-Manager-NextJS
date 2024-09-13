@@ -1,7 +1,7 @@
 'use client';
 
 import { useFormStatus } from 'react-dom';
-import { Button } from '@nextui-org/react';
+import { Button } from '@nextui-org/button';
 
 interface FormButtonProps {
   children: React.ReactNode;

@@ -2,7 +2,7 @@
 
 import { useFormState } from "react-dom";
 import * as actions from "@/actions";
-import { Button } from "@nextui-org/react";
+import { Button } from '@nextui-org/button';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 

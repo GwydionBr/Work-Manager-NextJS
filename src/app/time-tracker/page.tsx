@@ -1,7 +1,7 @@
 import TimerHeader from '@/components/time-tracker/headers/timerHeader';
 import NewProjectForm from '@/components/time-tracker/forms/newProjectForm';
 import ListProjects from '@/components/time-tracker/project/listProjects';
-import { Button} from '@nextui-org/react';
+import {Button} from "@nextui-org/button";
 import Link from "next/link";
 import paths from "@/paths";
 

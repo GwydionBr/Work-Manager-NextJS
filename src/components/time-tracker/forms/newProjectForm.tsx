@@ -3,11 +3,11 @@
 import { useFormState } from 'react-dom';
 import {
   Input,
-  Button,
   Popover,
   PopoverTrigger,
   PopoverContent,
 } from '@nextui-org/react';
+import { Button } from '@nextui-org/button';
 import * as actions from '@/actions';
 import FormButton from '@/components/common/form-button';
 
