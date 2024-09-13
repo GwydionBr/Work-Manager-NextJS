@@ -10,10 +10,6 @@ export default function Header() {
 
   const menuItems = [
     {
-      title: "Anja",
-      href: paths.anja.anja(),
-    },
-    {
       title: "Time Tracker",
       href: paths.timeTracker.timeTracker(),
     },
@@ -32,13 +28,6 @@ export default function Header() {
       </NavbarContent>
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        <NavbarItem>
-          <Chip>
-            <Link color="secondary" href={paths.anja.anja()}>
-              Anja
-            </Link>
-          </Chip>
-        </NavbarItem>
         <NavbarItem>
           <Chip>
             <Link color="secondary" href={paths.timeTracker.timeTracker()}>

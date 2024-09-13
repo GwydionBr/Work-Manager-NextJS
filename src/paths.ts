@@ -3,12 +3,6 @@ const paths = {
     return '/';
   },
 
-  anja: {
-    anja() {
-      return '/anja';
-    }
-  },
-
   timeTracker: {
     timeTracker() {
       return '/time-tracker';
