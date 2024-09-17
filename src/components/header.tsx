@@ -2,8 +2,8 @@
 
 import React from "react";
 import {Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, Link, Chip} from "@nextui-org/react";
-import {Button} from "@nextui-org/button";
 import paths from "@/paths";
+import HeaderAuth from "./header-auth";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -37,14 +37,7 @@ export default function Header() {
         </NavbarItem>
       </NavbarContent>
       <NavbarContent justify="end">
-        <NavbarItem className="hidden lg:flex">
-          <Link href="#">Login</Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Button as={Link} color="primary" href="#" variant="flat">
-            Sign Up
-          </Button>
-        </NavbarItem>
+        <HeaderAuth />
       </NavbarContent>
       <NavbarMenu>
         {menuItems.map((item, index) => (
