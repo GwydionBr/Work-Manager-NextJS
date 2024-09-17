@@ -11,4 +11,5 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return !!auth; // Wenn token existiert, ist der Benutzer eingeloggt
     },
   },
+  trustHost: true, // Vertrauenswürdige Hosts erlauben (für Entwicklungszwecke)
 })
