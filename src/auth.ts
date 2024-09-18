@@ -1,15 +1,9 @@
-
 import NextAuth from "next-auth"
 import GitHub from "next-auth/providers/github"
+import { DrizzleAdapter } from "@auth/drizzle-adapter"
+import { db } from "../drizzle/schema"
  
-export const { handlers, signIn, signOut, auth } = NextAuth({
+export const { handlers, auth, signIn, signOut } = NextAuth({
+  adapter: DrizzleAdapter( db ),
   providers: [GitHub],
-  callbacks: {
-    // Autorisierungs-Callback
-    authorized: async ({ auth }) => {
-      // Überprüfe, ob ein Benutzer authentifiziert ist (token vorhanden)
-      return !!auth; // Wenn token existiert, ist der Benutzer eingeloggt
-    },
-  },
-  trustHost: true, // Vertrauenswürdige Hosts erlauben (für Entwicklungszwecke)
 })
