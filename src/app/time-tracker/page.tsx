@@ -21,7 +21,7 @@ export default async function TimeTracker() {
       />
       <div className="flex flex-col gap-4 p-10 items-center">
         <Link href={paths.timeTracker.overview()}>
-          <Button  className="bg-primary text-primary-foreground">
+          <Button  className="bg-accent text-accent-foreground">
             Overview
           </Button>
         </Link>
@@ -32,3 +32,4 @@ export default async function TimeTracker() {
     </div>
   );
 }
+

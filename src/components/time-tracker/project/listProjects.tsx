@@ -26,7 +26,7 @@ export default async function ListProjects({ userId }: { userId: string }) {
           <p className="col-span-3">{project.projectName}</p>
           <p>{project.projectSalary} $/h</p>
           <Link className="col-span-1" href={paths.timeTracker.showProject(project.id)}>
-            <Button size="sm">View</Button>
+            <Button size="sm" className="bg-secondary text-secondary-foreground">View</Button>
           </Link>
           <NewTimerForm projectId={project.id} projectSalary={project.projectSalary} redirectStatus={true}/>
           <EditProjectForm projectId={project.id} project={project}/>

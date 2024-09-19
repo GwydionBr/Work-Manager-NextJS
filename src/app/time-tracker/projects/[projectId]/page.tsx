@@ -42,7 +42,7 @@ export default async function ProjectPage({ params }: ProjectShowPageProps) {
       <p className="text-xl font-bold text-center pt-8">{project?.projectSalary} $/h</p>
       <div className="flex justify-between p-7">
         <Link href={paths.timeTracker.timeTracker()}>
-          <Button color="default">Back</Button>
+          <Button className="bg-secondary text-secondary-foreground">Back</Button>
         </Link>
         <div className="flex gap-4">
           {project && <EditProjectForm projectId={projectId} project={project} />}

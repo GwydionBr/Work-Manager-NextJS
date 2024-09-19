@@ -1,0 +1,11 @@
+Farben:
+
+--primary: Orange für Primäraktionen (Hervorgehobene Aktionen).
+--secondary: Gelb für sekundäre Aktionen (weniger wichtige Aktionen).
+--accent: Grün für positive oder bestätigende Aktionen.
+--accent-alt: Rosa für alternative positive Aktionen, wie z.B. "Love" oder "Favoriten".
+--destructive: Rot für destruktive Aktionen wie "Löschen" oder "Abbrechen".
+--warning: Gelb für Warnungen oder Vorsichtsmaßnahmen.
+--info: Blau für Informationsbuttons.
+--success: Kräftiges Grün für erfolgreiche Aktionen oder Bestätigungen.
+--muted: Sehr helles Grau für zurückhaltende oder inaktive Buttons.

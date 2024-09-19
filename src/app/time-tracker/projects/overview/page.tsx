@@ -54,7 +54,7 @@ export default async function OverviewPage() {
       <div className="grid grid-cols-12">
         <div className="justify-self-center pb-5 pt-5">
           <Link href={paths.timeTracker.timeTracker()}>
-            <Button>Back</Button>
+            <Button className="bg-secondary text-secondary-foreground">Back</Button>
           </Link>
         </div>
         <div className="row-start-2 col-start-2 col-span-10">

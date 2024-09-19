@@ -93,7 +93,7 @@ export default function EditProjectForm({ projectId, project }: EditProjectFormP
   return(
     <Popover placement="left" backdrop="blur" isOpen={isPopoverOpen}>
       <PopoverTrigger>
-        <Button className="bg-teal-500" onClick={togglePopover}><EditIcon></EditIcon></Button>
+        <Button className="bg-info text-info-foreground" onClick={togglePopover}><EditIcon/></Button>
       </PopoverTrigger>
       <PopoverContent>
           <div className="flex flex-col gap-3 p-3">
