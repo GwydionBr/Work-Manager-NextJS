@@ -27,7 +27,7 @@ export default function DeleteSessionButton({ sessionId, projectId }: DeleteProj
 
   return (
     <div>
-      <Button size="sm" color="danger" onClick={handleSubmit}>
+      <Button size="sm" variant="destructive" onClick={handleSubmit}>
             <DeleteIcon />
           </Button>
           {formState._form && formState._form.length > 0 && (

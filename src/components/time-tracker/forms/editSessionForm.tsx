@@ -110,7 +110,7 @@ export default function EditSessionForm(session: TimerSession) {
   return (
     <Popover placement="bottom" backdrop="blur" isOpen={isPopoverOpen}>
       <PopoverTrigger>
-        <Button size="sm" color="primary" onClick={togglePopover}><EditIcon></EditIcon></Button>
+        <Button size="sm" className="bg-info text-info-foreground" onClick={togglePopover}><EditIcon/></Button>
       </PopoverTrigger>
       <PopoverContent>
           <DatePicker

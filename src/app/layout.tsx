@@ -26,7 +26,7 @@ export default function RootLayout({
         <link rel="icon" type="image/png" sizes="96x96" href="/facicons/favicon-96x96.png" />
         <link rel="icon" type="image/png" sizes="256x256" href="/favicons/favicon-256x256.png" />
       </head>
-      <body className={inter.className}>
+      <body className="bg-background text-foreground">
         <div className="flex flex-col min-h-screen">
           <main className="flex-grow">
             <Providers>

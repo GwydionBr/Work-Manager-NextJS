@@ -10,7 +10,8 @@ import {
 import { useSession } from 'next-auth/react';
 import SignInButton from './auth/signInButton';
 import SignOutButton from './auth/signOutButton';
-import ThemeSwitcher from './themeSwitcher';
+import ThemeSwitcher from './theme/themeSwitcher';
+import ThemeToggler from './theme/themeToggler';
 
 export default function HeaderAuth() {
   const session = useSession();
@@ -43,7 +44,7 @@ export default function HeaderAuth() {
           <SignInButton />
         </NavbarItem>
         <NavbarItem>
-          <ThemeSwitcher />
+          <ThemeToggler />
         </NavbarItem>
       </>
     );
