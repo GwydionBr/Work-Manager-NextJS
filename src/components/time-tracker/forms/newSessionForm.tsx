@@ -6,7 +6,7 @@ import {
   PopoverTrigger,
   PopoverContent,
 } from '@nextui-org/react';
-import { Button } from '@nextui-org/button';
+import { Button } from "@/components/ui/button"
 import { useState } from 'react';
 import { DatePicker } from "@nextui-org/date-picker";
 import * as actions from '@/actions/time_tracker/createSession';

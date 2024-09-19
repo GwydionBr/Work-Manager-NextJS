@@ -4,6 +4,7 @@ import React from "react";
 import {Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, Link, Chip} from "@nextui-org/react";
 import paths from "@/paths";
 import HeaderAuth from "./header-auth";
+import { Button } from "@/components/ui/button"
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -29,11 +30,11 @@ export default function Header() {
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem>
-          <Chip>
-            <Link color="secondary" href={paths.timeTracker.timeTracker()}>
+          <Button asChild >
+            <Link href={paths.timeTracker.timeTracker()}>
               Time Tracker
             </Link>
-          </Chip>
+          </Button>
         </NavbarItem>
       </NavbarContent>
       <NavbarContent justify="end">

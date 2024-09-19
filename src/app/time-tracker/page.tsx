@@ -1,7 +1,7 @@
 import HeroHeader from '@/components/heroHeader';
 import NewProjectForm from '@/components/time-tracker/forms/newProjectForm';
 import ListProjects from '@/components/time-tracker/project/listProjects';
-import {Button} from "@nextui-org/button";
+import { Button } from "@/components/ui/button"
 import Link from "next/link";
 import paths from "@/paths";
 import { auth } from '@/auth';
@@ -21,7 +21,7 @@ export default async function TimeTracker() {
       />
       <div className="flex flex-col gap-4 p-10 items-center">
         <Link href={paths.timeTracker.overview()}>
-          <Button>
+          <Button  className="bg-primary text-primary-foreground">
             Overview
           </Button>
         </Link>

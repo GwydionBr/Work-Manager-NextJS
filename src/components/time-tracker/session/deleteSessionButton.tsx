@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import * as actions from "@/actions";
-import { Button } from '@nextui-org/button';
+import { Button } from "@/components/ui/button"
 import DeleteIcon from '@mui/icons-material/Delete';
 
 interface DeleteProjectButtonProps {

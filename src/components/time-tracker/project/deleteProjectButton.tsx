@@ -2,7 +2,7 @@
 
 import { useFormState } from "react-dom";
 import * as actions from "@/actions";
-import { Button } from '@nextui-org/button';
+import { Button } from "@/components/ui/button"
 import DeleteIcon from '@mui/icons-material/Delete';
 
 
@@ -20,7 +20,7 @@ export default function DeleteProjectButton({ projectId }: DeleteProjectButtonPr
 
   return (
     <form action={action}>
-          <Button color="danger" type="submit">
+          <Button variant="destructive" size="icon" type="submit">
             <DeleteIcon />
           </Button>
           {formState.errors._form && formState.errors._form.length > 0 && (

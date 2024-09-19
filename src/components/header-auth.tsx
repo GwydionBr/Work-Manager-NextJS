@@ -10,6 +10,7 @@ import {
 import { useSession } from 'next-auth/react';
 import SignInButton from './auth/signInButton';
 import SignOutButton from './auth/signOutButton';
+import ThemeSwitcher from './themeSwitcher';
 
 export default function HeaderAuth() {
   const session = useSession();
@@ -25,7 +26,8 @@ export default function HeaderAuth() {
         </PopoverTrigger>
         <PopoverContent>
           <div className="p-4">
-            <div className="flex flex-col justify-center gap-4">
+            <div className="flex flex-col justify-center items-center gap-8">
+              <ThemeSwitcher/>
               <p>{session.data.user.email}</p>
               <p className="text-center">{session.data.user.name}</p>
               <SignOutButton />
@@ -39,6 +41,9 @@ export default function HeaderAuth() {
       <>
         <NavbarItem>
           <SignInButton />
+        </NavbarItem>
+        <NavbarItem>
+          <ThemeSwitcher />
         </NavbarItem>
       </>
     );

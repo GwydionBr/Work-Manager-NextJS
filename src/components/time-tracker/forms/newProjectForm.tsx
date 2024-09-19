@@ -7,7 +7,7 @@ import {
   PopoverTrigger,
   PopoverContent,
 } from '@nextui-org/react';
-import { Button } from '@nextui-org/button';
+import { Button } from "@/components/ui/button"
 import * as actions from '@/actions';
 import FormButton from '@/components/common/form-button';
 
