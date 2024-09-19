@@ -3,7 +3,7 @@ import { Link } from "@nextui-org/react";
 import { Button } from "@nextui-org/button";
 import paths from "@/paths";
 import type { TimerSession, TimerProject } from '@/types';
-import OverviewHeader from "@/components/time-tracker/headers/overviewHeader";
+import HeroHeader from "@/components/heroHeader";
 import { db } from '@/db';
 import { auth } from '@/auth';
 import { redirect } from 'next/navigation';
@@ -47,7 +47,10 @@ export default async function OverviewPage() {
 
   return (
     <div>
-      <OverviewHeader />
+      <HeroHeader 
+        title="Time Tracker"
+        subtitle="Overview"
+      />
       <div className="grid grid-cols-12">
         <div className="justify-self-center pb-5 pt-5">
           <Link href={paths.timeTracker.timeTracker()}>

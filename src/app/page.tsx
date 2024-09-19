@@ -1,4 +1,6 @@
 import { getUsers } from "@/db";
+import HeroHeader from "@/components/heroHeader";
+import FakeText from "@/components/fakeText";
 
 export default async function Home() {
 
@@ -6,14 +8,10 @@ export default async function Home() {
 
   return (
     <div>
-      <h1>Main Page</h1>
-      <ul>
-        {tester.map((user) => (
-          <li key={user.id}>
-            <p>{user.name}</p>
-          </li>
-        ))}
-      </ul>
+      <HeroHeader 
+      title="Home" 
+      />
+      <FakeText />
     </div>
   );
 }

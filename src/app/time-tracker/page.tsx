@@ -1,4 +1,4 @@
-import TimerHeader from '@/components/time-tracker/headers/timerHeader';
+import HeroHeader from '@/components/heroHeader';
 import NewProjectForm from '@/components/time-tracker/forms/newProjectForm';
 import ListProjects from '@/components/time-tracker/project/listProjects';
 import {Button} from "@nextui-org/button";
@@ -16,7 +16,9 @@ export default async function TimeTracker() {
   
   return (
     <div>
-      <TimerHeader />
+      <HeroHeader 
+        title="Time Tracker"
+      />
       <div className="flex flex-col gap-4 p-10 items-center">
         <Link href={paths.timeTracker.overview()}>
           <Button>

@@ -10,6 +10,7 @@ import EditProjectForm from "@/components/time-tracker/forms/editProjectForm";
 import type { TimerSession } from '@/types';
 import { db } from '@/db';
 import { eq } from "drizzle-orm";
+import HeroHeader from "@/components/heroHeader";
 
 interface ProjectShowPageProps {
   params: {
@@ -33,9 +34,12 @@ export default async function ProjectPage({ params }: ProjectShowPageProps) {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold text-center pb-4 mt-6">{project?.projectName}</h1>
-      <p className="text-xl font-bold text-center">{project?.projectDescription}</p>
-      <p className="text-xl font-bold text-center">{project?.projectSalary} $/h</p>
+      <HeroHeader 
+        title={project?.projectName}
+        subtitle={project?.projectDescription}
+      />
+
+      <p className="text-xl font-bold text-center pt-8">{project?.projectSalary} $/h</p>
       <div className="flex justify-between p-7">
         <Link href={paths.timeTracker.timeTracker()}>
           <Button color="default">Back</Button>
