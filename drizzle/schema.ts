@@ -5,10 +5,13 @@ import {
   text,
   primaryKey,
   integer,
+  serial,
+  doublePrecision,
 } from "drizzle-orm/pg-core"
 import postgres from "postgres"
 import { drizzle } from "drizzle-orm/postgres-js"
 import type { AdapterAccountType } from "next-auth/adapters"
+import { InferSelectModel, InferInsertModel } from 'drizzle-orm'
  
 const connectionString = process.env.POSTGRES_URL!
 const pool = postgres(connectionString, { max: 1 })
@@ -21,6 +24,7 @@ export const test = pgTable("test", {
     .$defaultFn(() => crypto.randomUUID()),
   name: text("name"),
 })
+
  
 export const users = pgTable("user", {
   id: text("id")
@@ -98,3 +102,20 @@ export const authenticators = pgTable(
     }),
   })
 )
+
+export const timerProjects = pgTable("timerProject", {
+  id: serial("id").primaryKey(),
+  projectName: text("project_name").unique().notNull(),
+  projectDescription: text("project_description").notNull(),
+  projectSalary: doublePrecision("project_salary").notNull(),
+})
+
+export const timerSessions = pgTable("timerSession", {
+  id: serial("id").primaryKey(),
+  timeSpent: integer("time_spent").notNull(),
+  moneyEarned: doublePrecision("money_earned").notNull(),
+  sessionDate: timestamp("session_date", { mode: "date" }).notNull(),
+  projectId: integer("project_id")
+    .notNull()
+    .references(() => timerProjects.id, { onDelete: "cascade" }),
+})
