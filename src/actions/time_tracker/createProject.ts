@@ -6,6 +6,7 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import paths from '@/paths';
 import { timerProjects } from "../../../drizzle/schema";
+import { auth } from '@/auth';
 
 const createProjectSchema = z.object({
   projectName: z.string().min(1).max(255),
@@ -26,6 +27,13 @@ export async function createProject(
   formState: CreateProjectFormState,
   formData: FormData
 ): Promise<CreateProjectFormState> {
+
+  const session = await auth();
+  const user = session?.user;
+  if (!session || !user) {
+    redirect(paths.home());
+  }
+
   const result = createProjectSchema.safeParse({
     projectName: formData.get("projectName") as string,
     projectDescription: formData.get("projectDescription") as string,
@@ -41,6 +49,7 @@ export async function createProject(
   let project;
   try {
     project = await db.insert(timerProjects).values({
+        userId: user.id!,
         projectName: result.data.projectName,
         projectDescription: result.data.projectDescription,
         projectSalary: result.data.projectSalary,

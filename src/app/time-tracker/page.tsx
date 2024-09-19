@@ -4,8 +4,16 @@ import ListProjects from '@/components/time-tracker/project/listProjects';
 import {Button} from "@nextui-org/button";
 import Link from "next/link";
 import paths from "@/paths";
+import { auth } from '@/auth';
+import { redirect } from 'next/navigation';
 
-export default function TimeTracker() {
+export default async function TimeTracker() {
+  const session = await auth()
+  const user = session?.user
+  if (!session || !user) {
+    redirect(paths.home())
+  }
+  
   return (
     <div>
       <TimerHeader />
@@ -16,7 +24,7 @@ export default function TimeTracker() {
           </Button>
         </Link>
         <NewProjectForm />
-        <ListProjects />
+        <ListProjects userId={user.id!}/>
       </div>
       
     </div>

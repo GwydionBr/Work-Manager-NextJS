@@ -10,7 +10,6 @@ interface FetchSessionsProps {
 
 export async function fetchSessions({ slug }: FetchSessionsProps): Promise<TimerSession[]> {
 
-
   const project = await db.query.timerProjects.findFirst({
     where: (p) => eq(p.projectName, slug)
   });

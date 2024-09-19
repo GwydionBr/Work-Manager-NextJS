@@ -11,7 +11,7 @@ import {
 import postgres from "postgres"
 import { drizzle } from "drizzle-orm/postgres-js"
 import type { AdapterAccountType } from "next-auth/adapters"
-import { InferSelectModel, InferInsertModel } from 'drizzle-orm'
+import { relations } from 'drizzle-orm';
  
 const connectionString = process.env.POSTGRES_URL!
 const pool = postgres(connectionString, { max: 1 })
@@ -108,7 +108,15 @@ export const timerProjects = pgTable("timerProject", {
   projectName: text("project_name").unique().notNull(),
   projectDescription: text("project_description").notNull(),
   projectSalary: doublePrecision("project_salary").notNull(),
+  userId: text("userId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
 })
+
+export const usersRelations = relations(users, ({ many }) => ({
+  timerProjects: many(timerProjects),
+}));
+
 
 export const timerSessions = pgTable("timerSession", {
   id: serial("id").primaryKey(),
@@ -119,3 +127,7 @@ export const timerSessions = pgTable("timerSession", {
     .notNull()
     .references(() => timerProjects.id, { onDelete: "cascade" }),
 })
+
+export const timerProjectRelations = relations(timerProjects, ({ many }) => ({
+  timerSessions: many(timerSessions),
+}));

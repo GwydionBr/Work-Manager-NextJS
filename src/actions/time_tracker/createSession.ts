@@ -4,6 +4,7 @@ import { db } from "@/db";
 import { revalidatePath } from 'next/cache';
 import paths from '@/paths';
 import { timerSessions } from "../../../drizzle/schema";
+import { eq } from "drizzle-orm";
 
 interface CreateSessionProps {
   projectId: number;
@@ -18,9 +19,7 @@ export async function createSession(
   const { projectId, loggedDate, loggedHours, loggedMinutes } = newSession;
 
   const project = await db.query.timerProjects.findFirst({
-    with: {
-      id: Number(projectId),
-    },
+    where: (p) => eq(p.id, projectId), // Bedingung für die Abfrage
   });
 
   if (!project) {

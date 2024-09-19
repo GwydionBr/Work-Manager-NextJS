@@ -5,11 +5,14 @@ import { db } from '@/db';
 import paths from '@/paths';
 import EditProjectForm from '@/components/time-tracker/forms/editProjectForm';
 import NewTimerForm from '@/components/time-tracker/forms/newTimerForm';
+import { eq } from "drizzle-orm";
 
-export default async function ListProjects() {
+export default async function ListProjects({ userId }: { userId: string }) {
   let projects;
   try {
-    projects = await db.query.timerProjects.findMany();
+    projects = await db.query.timerProjects.findMany({
+      where: (p) => eq(p.userId, userId),
+    });
   } catch (error) {
     console.error("Failed to fetch projects:", error);
     // Handle the error appropriately in your application context

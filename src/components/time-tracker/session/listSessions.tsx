@@ -4,9 +4,18 @@ import EditSessionForm from "@/components/time-tracker/forms/editSessionForm";
 import { Accordion, AccordionSummary, AccordionDetails, Typography } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ListTotalMoneyAndTime from '@/components/time-tracker/session/listTotalMoneyAndTime';
-import type { TimerSession } from '@/types';
+// import type { TimerSession } from '@/types';
 import { format, getWeekOfMonth } from 'date-fns';
 import { de } from 'date-fns/locale';
+
+export interface TimerSession {
+  id: number;
+  timeSpent: number;
+  moneyEarned: number;
+  sessionDate: Date;
+  projectId: number;
+  projectName?: string; // Added projectName as an optional property
+}
 
 interface ListSessionsProps {
   sessions: TimerSession[];
@@ -125,9 +134,10 @@ export default function ListSessions({ sessions }: ListSessionsProps) {
                         <AccordionDetails>
                           {sessions.map((session) => (
                             <div key={session.id} className="pb-5">
-                              <div className="grid grid-cols-5 gap-5">
+                              <div className="grid grid-cols-6 gap-5">
                                 <p className="text-center col-span-1">{session.moneyEarned} $</p>
                                 <p className="text-center col-span-2">{session.timeSpent} Minutes</p>
+                                {session.projectName ? <p className="text-center col-span-1">{session.projectName}</p> : null}
                                 <EditSessionForm {...session} />
                                 <DeleteSessionButton sessionId={session.id} projectId={session.projectId} />
                               </div>

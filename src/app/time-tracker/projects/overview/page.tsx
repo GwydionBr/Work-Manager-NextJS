@@ -1,18 +1,48 @@
 import ListSessions from "@/components/time-tracker/session/listSessions";
 import { Link } from "@nextui-org/react";
-import {Button} from "@nextui-org/button";
+import { Button } from "@nextui-org/button";
 import paths from "@/paths";
-import type { TimerSession } from '@/types';
+import type { TimerSession, TimerProject } from '@/types';
 import OverviewHeader from "@/components/time-tracker/headers/overviewHeader";
 import { db } from '@/db';
+import { auth } from '@/auth';
+import { redirect } from 'next/navigation';
+import { eq, inArray } from "drizzle-orm";
 
 export default async function OverviewPage() {
-  let sessions: TimerSession[];
+  const session = await auth();
+  const user = session?.user;
+  if (!session || !user) {
+    redirect(paths.home());
+  }
+
+  let projects: TimerProject[] = [];
+  let sessions: (TimerSession & { projectName: string })[] = [];
+
   try {
-    sessions = await db.query.timerSessions.findMany();
+    // Wähle die timerProjects aus, die die richtige userId haben
+    projects = await db.query.timerProjects.findMany({
+      where: (p) => eq(p.userId, user.id!),
+    });
+
+    // Extrahiere die projectIds aus den ausgewählten timerProjects
+    const projectIds = projects.map((project) => project.id);
+
+    // Wähle die timerSessions aus, die die projectId der ausgewählten timerProjects haben
+    const rawSessions = await db.query.timerSessions.findMany({
+      where: (s) => inArray(s.projectId, projectIds),
+    });
+
+    // Füge die projectName Eigenschaft zu den Sessions hinzu
+    sessions = rawSessions.map((session) => {
+      const project = projects.find((project) => project.id === session.projectId);
+      return {
+        ...session,
+        projectName: project ? project.projectName : "Unknown Project",
+      };
+    });
   } catch (error) {
-    console.error("Failed to fetch sessions:", error);
-    sessions = [];
+    console.error("Failed to fetch projects or sessions in Overview Page:", error);
   }
 
   return (
