@@ -25,7 +25,7 @@ export default function HeaderAuth() {
         <PopoverTrigger>
           <Avatar src={session.data.user.image || ''} />
         </PopoverTrigger>
-        <PopoverContent>
+        <PopoverContent className="bg-foreground text-background">
           <div className="p-4">
             <div className="flex flex-col justify-center items-center gap-8">
               <ThemeSwitcher/>

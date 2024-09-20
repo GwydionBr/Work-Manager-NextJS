@@ -6,6 +6,13 @@ import paths from '@/paths';
 import EditProjectForm from '@/components/time-tracker/forms/editProjectForm';
 import NewTimerForm from '@/components/time-tracker/forms/newTimerForm';
 import { eq } from "drizzle-orm";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
+
 
 export default async function ListProjects({ userId }: { userId: string }) {
   let projects;
@@ -21,25 +28,35 @@ export default async function ListProjects({ userId }: { userId: string }) {
   
   const renderedProjects = projects.map((project) => {
     return (
-      <div key={project.id}>
-        <div  className="grid grid-cols-7 gap-4">
-          <p className="col-span-3">{project.projectName}</p>
-          <p>{project.projectSalary} $/h</p>
-          <Link className="col-span-1" href={paths.timeTracker.showProject(project.id)}>
-            <Button size="sm" className="bg-secondary text-secondary-foreground">View</Button>
-          </Link>
-          <NewTimerForm projectId={project.id} projectSalary={project.projectSalary} redirectStatus={true}/>
-          <EditProjectForm projectId={project.id} project={project}/>
-        </div>
-        <Divider />
-      </div>
-      
+      <AccordionItem value={`${project.id}`}>
+        <AccordionTrigger>
+          <div className="grid grid-cols-7">
+            <p className="col-span-3">{project.projectName}</p>
+            <p>{project.projectSalary} $/h</p>
+            <div className="col-span-3">
+              <Button size="sm" className="bg-secondary text-secondary-foreground" asChild>
+                <Link href={paths.timeTracker.showProject(project.id)}>
+                  View
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </AccordionTrigger>
+          <AccordionContent>
+            <div className="grid grid-cols-2 gap-4 p-4">
+              <p className="col-span-2 text-center pb-4">{project.projectDescription}</p>
+              <NewTimerForm projectId={project.id} projectSalary={project.projectSalary} redirectStatus={true}/>
+              <EditProjectForm projectId={project.id} project={project}/>
+            </div>
+        </AccordionContent>
+      </AccordionItem>
     );
   });
 
   return (
-    <div className='flex flex-col gap-3 p-3'>
+    <Accordion type="single" collapsible>
       {renderedProjects}
-    </div>
+    </Accordion>
+
   );
 }
