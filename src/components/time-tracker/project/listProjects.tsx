@@ -28,7 +28,7 @@ export default async function ListProjects({ userId }: { userId: string }) {
   
   const renderedProjects = projects.map((project) => {
     return (
-      <AccordionItem value={`${project.id}`}>
+      <AccordionItem value={`${project.id}`} className="bg-accordion pr-4 my-2 rounded-md">
         <AccordionTrigger>
           <div className="grid grid-cols-7">
             <p className="col-span-3">{project.projectName}</p>
@@ -54,7 +54,7 @@ export default async function ListProjects({ userId }: { userId: string }) {
   });
 
   return (
-    <Accordion type="single" collapsible>
+    <Accordion type="single" collapsible className="pt-4">
       {renderedProjects}
     </Accordion>
 

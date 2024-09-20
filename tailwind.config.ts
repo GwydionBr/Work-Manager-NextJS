@@ -23,6 +23,7 @@ const config: Config = {
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
+				accordion:  'hsl(var(--accordion))',
   			primary: 'hsl(var(--primary))',
   			'primary-foreground': 'hsl(var(--primary-foreground))',
   			secondary: 'hsl(var(--secondary))',
