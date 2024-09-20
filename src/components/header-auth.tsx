@@ -21,7 +21,8 @@ export default function HeaderAuth() {
     authContent = null;
   } else if (session.data?.user) {
     authContent = (
-      <Popover placement="left">
+      <div className="flex gap-8">
+        <Popover placement="left">
         <PopoverTrigger>
           <Avatar src={session.data.user.image || ''} />
         </PopoverTrigger>
@@ -36,6 +37,9 @@ export default function HeaderAuth() {
           </div>
         </PopoverContent>
       </Popover>
+      <ThemeToggler />
+      </div>
+      
     );
   } else {
     authContent = (

@@ -1,12 +1,18 @@
 import { Divider } from '@nextui-org/react';
 import DeleteSessionButton from '@/components/time-tracker/session/deleteSessionButton';
 import EditSessionForm from "@/components/time-tracker/forms/editSessionForm";
-import { Accordion, AccordionSummary, AccordionDetails, Typography } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ListTotalMoneyAndTime from '@/components/time-tracker/session/listTotalMoneyAndTime';
 // import type { TimerSession } from '@/types';
 import { format, getWeekOfMonth } from 'date-fns';
 import { de } from 'date-fns/locale';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
+
 
 export interface TimerSession {
   id: number;
@@ -81,60 +87,42 @@ export default function ListSessions({ sessions }: ListSessionsProps) {
     });
 
     return (
-      <Accordion key={month}>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls={`panel-${month}-content`}
-          id={`panel-${month}-header`}
-          className="bg-blue-200"
-        >
-          <Typography className="flex justify-between w-full">
-            <span>{month}</span>
-            <span>{moneyPerMonth.toFixed(2)} $</span>
-          </Typography>
-        </AccordionSummary>
-        <AccordionDetails>
+      <Accordion key={month} type="multiple">
+        <AccordionItem value={month}>
+            <AccordionTrigger className="flex justify-around w-full bg-accOne rounded">
+              <span>{month}</span>
+              <span>{moneyPerMonth.toFixed(2)} $</span>
+            </AccordionTrigger>
+            <AccordionContent>
           {Object.entries(weeks).map(([week, days]) => {
             let moneyPerWeek = 0;
             Object.values(days).forEach((sessions) => {
-              sessions.forEach((session) => (moneyPerWeek += session.moneyEarned));
+              sessions.forEach((session) => (moneyPerWeek += session.moneyEarned)); 
             });
 
             return (
-              <Accordion key={week}>
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls={`panel-${week}-content`}
-                  id={`panel-${week}-header`}
-                  className="bg-green-200"
-                >
-                  <Typography className="flex justify-between w-full">
+              <Accordion key={week} type="multiple">
+                <AccordionItem value={week}>
+                  <AccordionTrigger className="flex justify-around w-full bg-accTwo rounded">
                     <span>{week}</span>
                     <span>{moneyPerWeek.toFixed(2)} $</span>
-                  </Typography>
-                </AccordionSummary>
-                <AccordionDetails>
+                  </AccordionTrigger>
+                  <AccordionContent>
                   {Object.entries(days).map(([date, sessions]) => {
                     let moneyPerDate = 0;
                     sessions.forEach((session) => (moneyPerDate += session.moneyEarned));
 
                     return (
-                      <Accordion key={date}>
-                        <AccordionSummary
-                          expandIcon={<ExpandMoreIcon />}
-                          aria-controls={`panel-${date}-content`}
-                          id={`panel-${date}-header`}
-                          className="bg-yellow-200"
-                        >
-                          <Typography className="flex justify-between w-full">
+                      <Accordion key={date} type="multiple">
+                        <AccordionItem value={date}>
+                          <AccordionTrigger className="flex justify-around w-full bg-accThree rounded">
                             <span>{date}</span>
                             <span>{moneyPerDate.toFixed(2)} $</span>
-                          </Typography>
-                        </AccordionSummary>
-                        <AccordionDetails>
+                          </AccordionTrigger>
+                          <AccordionContent>
                           {sessions.map((session) => (
-                            <div key={session.id} className="pb-5">
-                              <div className="grid grid-cols-6 gap-5">
+                            <div key={session.id}>
+                              <div className="grid grid-cols-6 gap-5 items-center py-4">
                                 <p className="text-center col-span-1">{session.moneyEarned} $</p>
                                 <p className="text-center col-span-2">{session.timeSpent} Minutes</p>
                                 {session.projectName ? <p className="text-center col-span-1">{session.projectName}</p> : null}
@@ -144,22 +132,24 @@ export default function ListSessions({ sessions }: ListSessionsProps) {
                               <Divider />
                             </div>
                           ))}
-                        </AccordionDetails>
+                          </AccordionContent>
+                        </AccordionItem>
                       </Accordion>
                     );
                   })}
-                </AccordionDetails>
+                  </AccordionContent>
+                </AccordionItem>
               </Accordion>
             );
           })}
-        </AccordionDetails>
+        </AccordionContent>
+        </AccordionItem>
       </Accordion>
     );
   });
 
   return (
-    <div>
-      <div className="grid grid-cols-4">
+      <div className="grid grid-cols-4 pb-20">
         <div className="h-24">
           <ListTotalMoneyAndTime totalMoney={Number(totalMoney.toFixed(2))} totalTime={totalTime}/>
         </div>
@@ -167,6 +157,5 @@ export default function ListSessions({ sessions }: ListSessionsProps) {
           {renderedSessionsByMonth}
         </div>
       </div>
-    </div>
   );
 }

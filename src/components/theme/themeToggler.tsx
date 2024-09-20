@@ -22,7 +22,7 @@ export default function ThemeToggler() {
     <Button
       size="icon"
       onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-      className="px-4 py-2 rounded-lg text-white bg-blue-500 dark:bg-yellow-500 dark:text-black transition-all duration-300"
+      className={`px-4 py-2 rounded-lg ${theme === 'dark' ? "bg-yellow-300 text-black" : "text-white bg-black"} transition-all duration-300`}
     >
       {theme === 'dark' ? <LightModeIcon/> : <DarkModeIcon/>}
     </Button>

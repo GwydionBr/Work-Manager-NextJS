@@ -1,3 +1,13 @@
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+
+
 interface ListTotalMoneyAndTimeProps {
   totalMoney: number;
   totalTime: number;
@@ -5,20 +15,18 @@ interface ListTotalMoneyAndTimeProps {
 
 export default function ListTotalMoneyAndTime({totalMoney, totalTime}: ListTotalMoneyAndTimeProps) {
   return (
-    <div className="rounded shadow bg-lime-200 p-5"> 
-      <div className="flex flex-col gap-5 mt-5 items-center">
-        <div>
-          <h3 className="text-sm font-semibold pb-3 underline">Total Money Earned</h3>
-          <p className="text-lg font-semibold text-center">{totalMoney} $</p>
+    <Card>
+      <CardHeader className="text-center">
+        <CardTitle>Total Money Earned</CardTitle>
+        <CardDescription>{totalMoney} $</CardDescription>
+      </CardHeader>
+      <CardContent className="text-center">
+        <CardTitle>Total Time Spent</CardTitle>
+        <div className="flex justify-center gap-4 pt-4">
+          <CardDescription>Hours: {Math.floor(totalTime/60)}</CardDescription>
+          <CardDescription>Minutes: {totalTime%60}</CardDescription>
         </div>
-        <div>
-          <h3 className="text-sm font-semibold text-center pb-3 underline">Total Time Spent</h3>
-          <div className="flex gap-5">
-            <p className="text-lg font-semibold">Hours: {Math.floor(totalTime/60)}</p>
-            <p className="text-lg font-semibold">Minutes: {totalTime%60}</p>
-          </div>
-        </div>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 }

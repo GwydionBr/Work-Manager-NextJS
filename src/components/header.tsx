@@ -30,7 +30,7 @@ export default function Header() {
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem>
-          <Button asChild >
+          <Button asChild className="bg-purple-900 text-white hover:bg-yellow-500 hover:text-black">
             <Link href={paths.timeTracker.timeTracker()}>
               Time Tracker
             </Link>

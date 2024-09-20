@@ -48,15 +48,14 @@ export default async function OverviewPage() {
   return (
     <div>
       <HeroHeader 
-        title="Time Tracker"
-        subtitle="Overview"
+        title="Overview"
       />
-      <div className="grid grid-cols-12">
-        <div className="justify-self-center pb-5 pt-5">
+        <div className="px-8 pb-16">
           <Link href={paths.timeTracker.timeTracker()}>
-            <Button className="bg-secondary text-secondary-foreground">Back</Button>
+            <Button className="bg-accent text-accent-foreground">Back</Button>
           </Link>
         </div>
+      <div className="grid grid-cols-12">
         <div className="row-start-2 col-start-2 col-span-10">
           <ListSessions sessions={sessions} />
         </div>

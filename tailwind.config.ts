@@ -21,9 +21,17 @@ const config: Config = {
   			sm: 'calc(var(--radius) - 4px)'
   		},
   		colors: {
+
+				// Own colors
+				accOne: 'hsl(var(--accOne))',
+				accTwo: 'hsl(var(--accTwo))',
+				accThree: 'hsl(var(--accThree))',
+
+				accordion:  'hsl(var(--accordion))',
+				'accordion-content':  'hsl(var(--accordion-content))',
+
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
-				accordion:  'hsl(var(--accordion))',
   			primary: 'hsl(var(--primary))',
   			'primary-foreground': 'hsl(var(--primary-foreground))',
   			secondary: 'hsl(var(--secondary))',

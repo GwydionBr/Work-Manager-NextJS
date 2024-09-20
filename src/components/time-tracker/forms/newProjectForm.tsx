@@ -10,6 +10,7 @@ import {
 import { Button } from "@/components/ui/button"
 import * as actions from '@/actions';
 import FormButton from '@/components/common/form-button';
+import AddIcon from '@mui/icons-material/Add';
 
 export default function NewProjectForm() {
   const [formState, action] = useFormState(actions.createProject, {
@@ -20,7 +21,7 @@ export default function NewProjectForm() {
   return(
     <Popover placement="left" backdrop="blur">
       <PopoverTrigger>
-        <Button color="primary">New Project</Button>
+        <Button className="bg-accent text-ccent-foreground"><AddIcon/></Button>
       </PopoverTrigger>
       <PopoverContent>
         <form action={action}>

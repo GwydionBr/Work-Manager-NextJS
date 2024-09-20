@@ -17,16 +17,18 @@ export default async function TimeTracker() {
   return (
     <div>
       <HeroHeader 
-        title="Time Tracker"
+        title="Projects"
       />
-      <div className="flex flex-col gap-4 p-10 items-center">
-        <Link href={paths.timeTracker.overview()}>
-          <Button  className="bg-accent text-accent-foreground">
+      <div className="flex justify-end pr-16">
+        <Button  className="bg-accent text-accent-foreground" asChild>
+          <Link href={paths.timeTracker.overview()}>
             Overview
-          </Button>
-        </Link>
-        <NewProjectForm />
+          </Link>
+        </Button>
+      </div>
+      <div className="flex flex-col gap-4 p-10 items-center">
         <ListProjects userId={user.id!}/>
+        <NewProjectForm />
       </div>
       
     </div>
