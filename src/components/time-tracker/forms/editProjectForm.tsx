@@ -17,7 +17,7 @@ import { TimerProject } from '@/types';
 const createProjectSchema = z.object({
   projectName: z.string().min(1).max(255),
   projectDescription: z.string().min(1).max(255),
-  projectSalary: z.number().min(1),
+  projectSalary: z.number().min(0),
 });
 
 interface EditProjectFormState {

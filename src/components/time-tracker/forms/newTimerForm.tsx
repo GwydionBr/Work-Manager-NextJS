@@ -98,18 +98,23 @@ export default function NewTimerForm({ projectId, projectSalary, redirectStatus 
           <div className="text-center py-7">
             <p>{(projectSalary * time / 3600).toFixed(2)} $</p>
             <h1 className="text-2xl p-4">{displayTime(time)}</h1>
-            <div className="flex gap-5 justify-center">
-              <StartButton timerFunction={startTimer} />
-              <PauseButton timerFunction={pauseTimer} />
+              { !isTimerRunning ? (
+              <div className="flex gap-5 justify-center">
+                <StartButton timerFunction={startTimer} />
+              </div>
+              ) : (
+              <div className="flex gap-5 justify-center">
+                <PauseButton timerFunction={pauseTimer} />
                 <StopButton timerFunction={stopTimer} />
-                {formState?.errors._form ? (
-                  <div className="rounded p-2 bg-red-200 border border-red-400">
-                    {formState?.errors._form?.join(', ')}
-                  </div>
-                ) : null}
-            </div>
+              </div>
+              )}
+              {formState?.errors._form ? (
+                <div className="rounded p-2 bg-red-200 border border-red-400">
+                  {formState?.errors._form?.join(', ')}
+                </div>
+              ) : null}
             <div className="pt-8">
-              <Button color="danger" onClick={togglePopover}>Cancel</Button>
+              <Button variant="destructive" onClick={togglePopover}>Cancel</Button>
             </div>
           </div>
         </div>
