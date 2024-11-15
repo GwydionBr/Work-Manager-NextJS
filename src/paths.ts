@@ -12,8 +12,17 @@ const paths = {
     },
     overview() {
       return 'time-tracker/projects/overview';
-    }
+    },
   },
+
+  dienstPlan: {
+    dienstPlan() {
+      return '/dienst-plan';
+    },
+    showPlan(planId: number) {
+      return `/dienst-plan/${planId}`;
+    },
+  }
 };
 
 export default paths;

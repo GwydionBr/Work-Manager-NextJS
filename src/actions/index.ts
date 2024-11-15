@@ -7,3 +7,4 @@ export { deleteSession } from "./time_tracker/deleteSession";
 export { createTimerSession } from "./time_tracker/createTimerSession";
 export { editSession } from "./time_tracker/editSession";
 export { editProject } from "./time_tracker/editProject";
+export { createDienstplan } from "./dienstplan/createDienstplan";

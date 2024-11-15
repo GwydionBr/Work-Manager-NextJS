@@ -131,3 +131,44 @@ export const timerSessions = pgTable("timerSession", {
 export const timerProjectRelations = relations(timerProjects, ({ many }) => ({
   timerSessions: many(timerSessions),
 }));
+
+export const dienstPlan = pgTable("dienstPlan", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  description: text("description").notNull(),
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+})
+
+export const dienstPlanRelations = relations(dienstPlan, ({ many }) => ({
+  fixedWorkers: many(fixedWorker),
+  relativeWorkers: many(relativeWorker),
+}));
+
+export const fixedWorker = pgTable("fixedWorker", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  holidays: integer("holidays").notNull(),
+  workingHoursWeek: integer("workingHoursWeek").notNull(),
+  dienstPlanId: integer("dienstPlanId")
+    .notNull()
+    .references(() => dienstPlan.id, { onDelete: "cascade" }),
+})
+
+export const fixedWorkerRelations = relations(fixedWorker, ({ one }) => ({
+  dienstPlan: one(dienstPlan),
+}));
+
+export const relativeWorker = pgTable("relativeWorker", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  workingHoursMonth: integer("workingHoursMonth").notNull(),
+  dienstPlanId: integer("dienstPlanId")
+    .notNull()
+    .references(() => dienstPlan.id, { onDelete: "cascade" }),
+})
+
+export const relativeWorkerRelations = relations(relativeWorker, ({ one }) => ({
+  dienstPlan: one(dienstPlan),
+}));

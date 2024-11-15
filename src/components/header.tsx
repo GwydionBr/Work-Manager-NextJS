@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import {Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, Link, Chip} from "@nextui-org/react";
+import {Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, Link} from "@nextui-org/react";
 import paths from "@/paths";
 import HeaderAuth from "./header-auth";
 import { Button } from "@/components/ui/button"
@@ -33,6 +33,13 @@ export default function Header() {
           <Button asChild className="bg-purple-900 text-white hover:bg-yellow-500 hover:text-black">
             <Link href={paths.timeTracker.timeTracker()}>
               Time Tracker
+            </Link>
+          </Button>
+        </NavbarItem>
+        <NavbarItem>
+          <Button asChild className="bg-purple-900 text-white hover:bg-yellow-500 hover:text-black">
+            <Link href={paths.dienstPlan.dienstPlan()}>
+              Dienstplan
             </Link>
           </Button>
         </NavbarItem>
