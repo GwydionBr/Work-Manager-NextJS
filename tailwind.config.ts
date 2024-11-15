@@ -1,4 +1,3 @@
-import { Cormorant } from "next/font/google";
 import type { Config } from "tailwindcss";
 import { nextui } from "@nextui-org/react";
 
@@ -10,6 +9,12 @@ const config: Config = {
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+		screens: {
+      sm: '640px',
+      md: '768px',
+      lg: '976px',
+      xl: '1440px',
+    },
   	extend: {
   		backgroundImage: {
   			'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
@@ -61,13 +66,6 @@ const config: Config = {
   			border: 'hsl(var(--border))',
   			input: 'hsl(var(--input))',
   			ring: 'hsl(var(--ring))',
-  			chart: {
-  				'1': 'hsl(var(--chart-1))',
-  				'2': 'hsl(var(--chart-2))',
-  				'3': 'hsl(var(--chart-3))',
-  				'4': 'hsl(var(--chart-4))',
-  				'5': 'hsl(var(--chart-5))'
-  			}
   		},
   		keyframes: {
   			'accordion-down': {
@@ -93,7 +91,7 @@ const config: Config = {
   		}
   	}
   },
-  darkMode: ["class", "class"],
+  darkMode: "class",
   plugins: [nextui(), require("tailwindcss-animate")],
 };
 export default config;
