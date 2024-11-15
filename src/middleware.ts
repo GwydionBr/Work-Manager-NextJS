@@ -8,5 +8,8 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/time-tracker/:path*'],
+  matcher: [
+    '/time-tracker/:path*',
+    '/dienst-plan/:path*',
+  ],
 }
