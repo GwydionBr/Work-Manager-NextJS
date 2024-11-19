@@ -38,7 +38,7 @@ export default function Header() {
         </NavbarItem>
         <NavbarItem> 
           <Button asChild className="bg-purple-900 text-white hover:bg-yellow-500 hover:text-black">
-            <Link href={paths.wgGame.wgGame()}>
+            <Link href={paths.wgGame.wg()}>
               WG Game
             </Link>
           </Button>

@@ -25,7 +25,7 @@ const paths = {
   },
 
   wgGame: {
-    wgGame() {
+    wg() {
       return '/wg';
     },
     showGame(gameId: number) {

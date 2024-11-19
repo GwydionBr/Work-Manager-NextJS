@@ -8,6 +8,7 @@ import { db } from '@/db';
 import { auth } from '@/auth';
 import { redirect } from 'next/navigation';
 import { eq, inArray } from "drizzle-orm";
+import ReturnButton from "@/components/common/returnButton";
 
 export default async function OverviewPage() {
   const session = await auth();
@@ -51,9 +52,7 @@ export default async function OverviewPage() {
         title="Overview"
       />
         <div className="px-8 pb-16">
-          <Link href={paths.timeTracker.timeTracker()}>
-            <Button className="bg-accent text-accent-foreground">Back</Button>
-          </Link>
+          <ReturnButton path={paths.timeTracker.timeTracker()}/>
         </div>
       <div className="grid grid-cols-12">
         <div className="row-start-2 col-start-2 col-span-10">

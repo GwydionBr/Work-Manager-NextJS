@@ -11,6 +11,7 @@ import type { TimerSession } from '@/types';
 import { db } from '@/db';
 import { eq } from "drizzle-orm";
 import HeroHeader from "@/components/heroHeader";
+import ReturnButton from "@/components/common/returnButton";
 
 interface ProjectShowPageProps {
   params: {
@@ -41,11 +42,7 @@ export default async function ProjectPage({ params }: ProjectShowPageProps) {
 
       <p className="text-xl font-bold text-center pt-8">{project?.projectSalary} $/h</p>
       <div className="flex justify-between p-7">
-        <Button className="bg-secondary text-secondary-foreground" asChild>
-          <Link href={paths.timeTracker.timeTracker()}>
-            Back
-          </Link>
-        </Button>
+        <ReturnButton path={paths.timeTracker.timeTracker()} />
         <div className="flex gap-4">
           {project && <EditProjectForm projectId={projectId} project={project} />}
           <DeleteProjectButton projectId={projectId} />
