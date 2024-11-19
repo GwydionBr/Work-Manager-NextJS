@@ -22,7 +22,20 @@ const paths = {
     showPlan(planId: number) {
       return `/dienst-plan/${planId}`;
     },
-  }
+  },
+
+  wgGame: {
+    wgGame() {
+      return '/wg';
+    },
+    showGame(gameId: number) {
+      return `/wg/${gameId}`;
+    },
+    newWG() {
+      return '/wg/newWG';
+    }
+  },
+    
 };
 
 export default paths;

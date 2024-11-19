@@ -8,3 +8,4 @@ export { createTimerSession } from "./time_tracker/createTimerSession";
 export { editSession } from "./time_tracker/editSession";
 export { editProject } from "./time_tracker/editProject";
 export { createDienstplan } from "./dienstplan/createDienstplan";
+export { getPlanById } from "./dienstplan/getPlanById";

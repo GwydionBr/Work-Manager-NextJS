@@ -18,6 +18,8 @@ const pool = postgres(connectionString, { max: 1 })
  
 export const db = drizzle(pool)
 
+// Authentification
+
 export const test = pgTable("test", {
   id: text("id")
     .primaryKey()
@@ -103,6 +105,8 @@ export const authenticators = pgTable(
   })
 )
 
+// Time Tracker
+
 export const timerProjects = pgTable("timerProject", {
   id: serial("id").primaryKey(),
   projectName: text("project_name").unique().notNull(),
@@ -141,6 +145,9 @@ export const dienstPlan = pgTable("dienstPlan", {
     .references(() => users.id, { onDelete: "cascade" }),
 })
 
+
+// Dienstplan
+
 export const dienstPlanRelations = relations(dienstPlan, ({ many }) => ({
   fixedWorkers: many(fixedWorker),
   relativeWorkers: many(relativeWorker),
@@ -171,4 +178,49 @@ export const relativeWorker = pgTable("relativeWorker", {
 
 export const relativeWorkerRelations = relations(relativeWorker, ({ one }) => ({
   dienstPlan: one(dienstPlan),
+}));
+
+
+// WG
+
+export const wg = pgTable("wg", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  description: text("description").notNull(),
+});
+
+export const wgMember = pgTable("wgMember", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  wgId: integer("wgId")
+    .notNull()
+    .references(() => wg.id, { onDelete: "cascade" }),
+});
+
+export const wgTask = pgTable("wgTask", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  description: text("description").notNull(),
+  wgId: integer("wgId")
+    .notNull()
+    .references(() => wg.id, { onDelete: "cascade" }),
+});
+
+export const wgRelations = relations(wg, ({ many }) => ({
+  wgMembers: many(wgMember),
+  wgTasks: many(wgTask),
+}));
+
+export const wgMemberRelations = relations(wgMember, ({ one }) => ({
+  wg: one(wg, {
+    fields: [wgMember.wgId],
+    references: [wg.id],
+  }),
+}));
+
+export const wgTaskRelations = relations(wgTask, ({ one }) => ({
+  wg: one(wg, {
+    fields: [wgTask.wgId],
+    references: [wg.id],
+  }),
 }));

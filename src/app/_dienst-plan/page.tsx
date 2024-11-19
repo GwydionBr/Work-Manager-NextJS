@@ -1,5 +1,6 @@
 import HeroHeader from '@/components/heroHeader';
 import NewDienstplanForm from '@/components/dienstplan/forms/newDienstplanForm';
+import ListPlans from '@/components/dienstplan/plans/listPlans';
 import paths from "@/paths";
 import { auth } from '@/auth';
 import { redirect } from 'next/navigation';
@@ -17,6 +18,7 @@ export default async function DienstPlanPage() {
         title="Dienstplan"
       />
       <div className="flex flex-col gap-4 p-10 items-center">
+        <ListPlans userId={user.id || ''} />
         <NewDienstplanForm />
       </div>
     </div>
