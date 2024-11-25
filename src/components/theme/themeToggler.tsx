@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button"
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
-import SettingsBrightnessIcon from '@mui/icons-material/SettingsBrightness';
 
 export default function ThemeToggler() {
   const { theme, setTheme } = useTheme();

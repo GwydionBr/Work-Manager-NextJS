@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { Divider } from '@nextui-org/react';
 import { Button } from "@/components/ui/button"
 import { db } from '@/db';
 import paths from '@/paths';
