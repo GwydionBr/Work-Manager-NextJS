@@ -24,7 +24,7 @@ export default function Header() {
           className="sm:hidden"
         />
         <NavbarBrand>
-          <Link href="/" className="font-bold text-inherit">Gwydion</Link>
+          <Link href="/" className="font-bold text-inherit">Gwitsch</Link>
         </NavbarBrand>
       </NavbarContent>
 
