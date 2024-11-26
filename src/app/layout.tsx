@@ -5,6 +5,7 @@ import Providers from "@/app/providers";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { Toaster } from "@/components/ui/toaster"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -33,6 +34,7 @@ export default function RootLayout({
             <Providers>
               <Header />
               {children}
+              <SpeedInsights />
               <Toaster />
             </Providers>
           </main>
