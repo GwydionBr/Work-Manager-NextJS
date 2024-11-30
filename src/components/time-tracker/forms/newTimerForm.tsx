@@ -25,13 +25,14 @@ export default function NewTimerForm({ projectId, projectSalary, redirectStatus 
   const [isFloatingWindowOpen, setIsFloatingWindowOpen] = useState(false); // State für das Floating Window
 
   // State für den Timer
-  const [time, setTime] = useState(0);
+  const [newTime, setNewTime] = useState(0);
+  const [totalTime, setTotalTime] = useState(0);
+
   const [roundedTime, setRoundedTime] = useState(0);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
 
   // New Variables
-  const now = Date.now();
-  const [startTime, setStartTime] = useState(now) ;
+  const [startTime, setStartTime] = useState(Date.now()) ;
 
 
   // Timer Logik
@@ -39,8 +40,8 @@ export default function NewTimerForm({ projectId, projectSalary, redirectStatus 
     if (isTimerRunning) {
       const interval = setInterval(() => {
         const now = Date.now();
-        const diff = (now - startTime) / 1000;
-        setTime(diff);
+        const diff = Math.floor((now - startTime) / 1000);
+        setNewTime(diff);
       }, 1000);
 
       return () => clearInterval(interval);
@@ -48,8 +49,8 @@ export default function NewTimerForm({ projectId, projectSalary, redirectStatus 
   }, [isTimerRunning]);
 
   useEffect(() => {
-    setRoundedTime(Math.ceil(time / 60));
-  }, [time]);
+    setRoundedTime(Math.ceil((newTime + totalTime) / 60));
+  }, [newTime, totalTime]);
 
   // Timer Funktionen
   const startTimer = () => {
@@ -58,13 +59,13 @@ export default function NewTimerForm({ projectId, projectSalary, redirectStatus 
   };
   const pauseTimer = () => {
     setIsTimerRunning(false);
+    setTotalTime(prevTotalTime => prevTotalTime + newTime);
+    setNewTime(0);
   };
-  const continueTimer = () => {
-    setStartTime(Date.now() - time * 1000);
-    setIsTimerRunning(true);
-  }
+
   const cancelTimer = () => {
-    setTime(0);
+    setNewTime(0);
+    setTotalTime(0);
     setIsTimerRunning(false);
   };
   async function stopTimer() {
@@ -86,6 +87,8 @@ export default function NewTimerForm({ projectId, projectSalary, redirectStatus 
       });
     } else {
       cancelTimer();
+      setIsPopoverOpen(false);
+      setIsFloatingWindowOpen(false);
     }
   }
 
@@ -109,7 +112,7 @@ export default function NewTimerForm({ projectId, projectSalary, redirectStatus 
             <StableTimer
               projectSalary={projectSalary}
               isTimerRunning={isTimerRunning}
-              time={time}
+              time={newTime + totalTime}
               startTimer={startTimer}
               pauseTimer={pauseTimer}
               stopTimer={stopTimer}
@@ -124,7 +127,7 @@ export default function NewTimerForm({ projectId, projectSalary, redirectStatus 
             onClose={toggleFloatingWindow}
             projectSalary={projectSalary}
             isTimerRunning={isTimerRunning}
-            time={time}
+            time={newTime + totalTime}
             startTimer={startTimer}
             pauseTimer={pauseTimer}
             stopTimer={stopTimer}

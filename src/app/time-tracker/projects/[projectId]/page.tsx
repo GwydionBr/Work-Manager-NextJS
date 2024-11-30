@@ -1,5 +1,3 @@
-import { Button } from "@/components/ui/button"
-import Link from "next/link";
 import paths from "@/paths";
 import NewSessionForm from "@/components/time-tracker/forms/newSessionForm";
 import DeleteProjectButton from "@/components/time-tracker/project/deleteProjectButton";
@@ -12,6 +10,8 @@ import { db } from '@/db';
 import { eq } from "drizzle-orm";
 import HeroHeader from "@/components/heroHeader";
 import ReturnButton from "@/components/common/returnButton";
+
+
 
 interface ProjectShowPageProps {
   params: {
@@ -35,10 +35,12 @@ export default async function ProjectPage({ params }: ProjectShowPageProps) {
 
   return (
     <div>
-      <HeroHeader 
-        title={project?.projectName}
-        subtitle={project?.projectDescription}
-      />
+      <div className="flex items-center">
+        <HeroHeader 
+          title={project?.projectName}
+          subtitle={project?.projectDescription}
+        />
+      </div>
 
       <p className="text-xl font-bold text-center pt-8">{project?.projectSalary} $/h</p>
       <div className="flex justify-between p-7">
