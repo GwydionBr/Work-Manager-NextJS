@@ -4,11 +4,12 @@ import DeleteProjectButton from "@/components/time-tracker/project/deleteProject
 import * as actions from "@/actions";
 import ListSessions from "@/components/time-tracker/session/listSessions";
 import NewTimerForm from "@/components/time-tracker/forms/newTimerForm";
-import EditProjectForm from "@/components/time-tracker/forms/editProjectForm";
+import EditProjectSheet from "@/components/time-tracker/forms/editProjectSheet";
 import type { TimerSession } from '@/types';
 import { db } from '@/db';
 import { eq } from "drizzle-orm";
 import HeroHeader from "@/components/heroHeader";
+import HeroHeaderProject from "@/components/time-tracker/project/heroHeaderProject";
 import ReturnButton from "@/components/common/returnButton";
 
 
@@ -21,7 +22,7 @@ interface ProjectShowPageProps {
 
 export default async function ProjectPage({ params }: ProjectShowPageProps) {
   const projectId = parseInt(params.projectId);
-  const project = await actions.getProjectById(projectId);
+  const project = await actions.getProjectById(projectId) || undefined;
 
   let sessions: TimerSession[];
   try {
@@ -36,19 +37,14 @@ export default async function ProjectPage({ params }: ProjectShowPageProps) {
   return (
     <div>
       <div className="flex items-center">
-        <HeroHeader 
-          title={project?.projectName}
-          subtitle={project?.projectDescription}
+        <HeroHeaderProject 
+          project={project}
         />
       </div>
 
       <p className="text-xl font-bold text-center pt-8">{project?.projectSalary} $/h</p>
       <div className="flex justify-between p-7">
         <ReturnButton path={paths.timeTracker.timeTracker()} />
-        <div className="flex gap-4">
-          {project && <EditProjectForm projectId={projectId} project={project} />}
-          <DeleteProjectButton projectId={projectId} />
-        </div>
       </div>
       <div className="flex flex-col gap-4 p-3 items-center">
         <div className="flex gap-4">
