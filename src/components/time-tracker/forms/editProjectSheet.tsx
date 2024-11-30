@@ -10,11 +10,13 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
+import { Separator } from "@/components/ui/separator"
 import { Input } from '@nextui-org/react';
 import { Button } from "@/components/ui/button"
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import * as actions from '@/actions';
 import { z } from 'zod';
+import DeleteProjectButton from '../project/deleteProjectButton';
 
 import { TimerProject } from '@/types';
 
@@ -97,13 +99,12 @@ export default function EditProjectSheet({ project }: EditProjectSheetProps) {
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
-          <SheetTitle>Edit the Project "{project.projectName}"</SheetTitle>
+          <SheetTitle>Project: "{project.projectName}"</SheetTitle>
           <SheetDescription>
-            This action cannot be undone. This will permanently delete your account
-            and remove your data from our servers.
+            Edit project details. Or delete the project.
           </SheetDescription>
         </SheetHeader>
-        <div className="flex flex-col gap-3 p-3">
+          <div className="flex flex-col items-center gap-5 p-3">
             <Input
               value={projectName}
               onChange={handleNameChange}
@@ -146,7 +147,11 @@ export default function EditProjectSheet({ project }: EditProjectSheetProps) {
             <SheetClose>
               <Button color="danger">Cancel</Button>
             </SheetClose>
-          </div>
+            <Separator className="mt-10"/>
+            <div className="pt-10">
+              <DeleteProjectButton projectId={project.id}/>
+            </div>
+        </div>
       </SheetContent>
     </Sheet>
 

@@ -109,7 +109,7 @@ export default function NewSessionForm({ projectId }: NewSessionFormProps) {
   return(
     <Popover placement="bottom" backdrop="blur" isOpen={isPopoverOpen}>
       <PopoverTrigger>
-        <Button color="primary" onClick={togglePopover}>New Session</Button>
+        <Button variant="default" onClick={togglePopover}>New Session</Button>
       </PopoverTrigger>
       <PopoverContent>
         <div className="flex flex-col gap-4 p-4">
