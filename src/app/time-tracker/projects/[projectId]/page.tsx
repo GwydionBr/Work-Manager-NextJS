@@ -49,13 +49,17 @@ export default async function ProjectPage({ params }: ProjectShowPageProps) {
       <div className="flex flex-col gap-4 p-3 items-center">
         <div className="flex gap-4">
           <NewSessionForm projectId={projectId} />
+        </div>
+        <div className="w-10/12 pt-6 grid grid-cols-3">
+        <div className="col-span-2">
+          <ListSessions sessions={sessions}/>
+        </div>
+        <div className="self-center justify-self-center">
           {
           project &&
            <NewTimerForm projectId={projectId} projectSalary={project.projectSalary} redirectStatus={false}/>
           }
         </div>
-        <div className="w-10/12 pt-6">
-          <ListSessions sessions={sessions}/>
         </div>
       </div>
     </div>

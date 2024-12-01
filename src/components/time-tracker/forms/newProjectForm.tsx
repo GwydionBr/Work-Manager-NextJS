@@ -57,8 +57,9 @@ export default function NewProjectForm() {
                 {formState?.errors._form?.join(', ')}
               </div>
             ) : null}
-
-            <FormButton>Create Project</FormButton>
+            <div className="mt-8">
+              <FormButton>Create Project</FormButton>
+            </div>
           </div>
         </form>
         

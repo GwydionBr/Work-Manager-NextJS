@@ -149,8 +149,8 @@ export default function NewSessionForm({ projectId }: NewSessionFormProps) {
               {formState?.errors._form?.join(', ')}
             </div>
           ) : null}
-          <Button color="secondary" onClick={handleSubmit}>Create Session</Button>
-          <Button color="danger" onClick={togglePopover}>Cancel</Button>
+          <Button onClick={handleSubmit} className="mt-8">Create Session</Button>
+          <Button variant="destructive" onClick={togglePopover}>Cancel</Button>
         </div>
           
       </PopoverContent>

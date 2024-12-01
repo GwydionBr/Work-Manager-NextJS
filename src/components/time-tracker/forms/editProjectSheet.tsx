@@ -99,7 +99,12 @@ export default function EditProjectSheet({ project }: EditProjectSheetProps) {
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
-          <SheetTitle>Project: "{project.projectName}"</SheetTitle>
+          <SheetTitle>
+            <div className="flex gap-8">
+              Project: "{project.projectName}" 
+              <DeleteProjectButton projectId={project.id}/>
+            </div>
+          </SheetTitle>
           <SheetDescription>
             Edit project details. Or delete the project.
           </SheetDescription>
@@ -148,9 +153,6 @@ export default function EditProjectSheet({ project }: EditProjectSheetProps) {
               <Button color="danger">Cancel</Button>
             </SheetClose>
             <Separator className="mt-10"/>
-            <div className="pt-10">
-              <DeleteProjectButton projectId={project.id}/>
-            </div>
         </div>
       </SheetContent>
     </Sheet>
