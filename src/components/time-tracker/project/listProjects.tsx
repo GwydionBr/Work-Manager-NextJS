@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { Button } from "@/components/ui/button"
 import { db } from '@/db';
 import paths from '@/paths';
-import EditProjectForm from '@/components/time-tracker/forms/editProjectForm';
+import EditProjectSheet from '../forms/editProjectSheet';
 import NewTimerForm from '@/components/time-tracker/forms/newTimerForm';
 import { eq } from "drizzle-orm";
 import {
@@ -45,7 +45,7 @@ export default async function ListProjects({ userId }: { userId: string }) {
             <div className="grid grid-cols-2 gap-4 p-4">
               <p className="col-span-2 text-center pb-4">{project.projectDescription}</p>
               <NewTimerForm projectId={project.id} projectSalary={project.projectSalary} redirectStatus={true}/>
-              <EditProjectForm projectId={project.id} project={project}/>
+              <EditProjectSheet project={project}/>
             </div>
         </AccordionContent>
       </AccordionItem>

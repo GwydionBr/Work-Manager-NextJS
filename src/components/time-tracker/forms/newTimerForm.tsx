@@ -1,11 +1,20 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Popover, PopoverTrigger, PopoverContent } from '@nextui-org/react';
 import { Button } from "@/components/ui/button";
 import * as actions from "@/actions";
 import FloatingTimer from "@/components/time-tracker/floatingTimer"; 
-import StableTimer from "@/components/time-tracker/stableTimer";
+import StartButton from "@/components/common/startButton";
+import PauseButton from "@/components/common/pauseButton";
+import StopButton from "@/components/common/stopButton";
+import { displayTime } from "@/assets/logicFunctions";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTrigger,
+  DialogTitle
+} from "@/components/ui/dialog";
 
 interface NewTimerProps {
   projectId: number;
@@ -21,7 +30,7 @@ interface NewTimerFormState {
 
 export default function NewTimerForm({ projectId, projectSalary, redirectStatus }: NewTimerProps) {
   const [formState, setFormState] = useState<NewTimerFormState>({ errors: {} });
-  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isFloatingWindowOpen, setIsFloatingWindowOpen] = useState(false); // State für das Floating Window
 
   // State für den Timer
@@ -32,8 +41,7 @@ export default function NewTimerForm({ projectId, projectSalary, redirectStatus 
   const [isTimerRunning, setIsTimerRunning] = useState(false);
 
   // New Variables
-  const [startTime, setStartTime] = useState(Date.now()) ;
-
+  const [startTime, setStartTime] = useState(Date.now());
 
   // Timer Logik
   useEffect(() => {
@@ -59,7 +67,7 @@ export default function NewTimerForm({ projectId, projectSalary, redirectStatus 
   };
   const pauseTimer = () => {
     setIsTimerRunning(false);
-    setTotalTime(prevTotalTime => prevTotalTime + newTime);
+    setTotalTime((prevTotalTime) => prevTotalTime + newTime);
     setNewTime(0);
   };
 
@@ -87,51 +95,68 @@ export default function NewTimerForm({ projectId, projectSalary, redirectStatus 
       });
     } else {
       cancelTimer();
-      setIsPopoverOpen(false);
+      setIsDialogOpen(false);
       setIsFloatingWindowOpen(false);
     }
   }
 
-  function togglePopover() {
-    setIsPopoverOpen(!isPopoverOpen);
+  function toggleDialog() {
+    setIsDialogOpen(!isDialogOpen);
     cancelTimer();
   }
 
   function toggleFloatingWindow() {
     setIsFloatingWindowOpen(!isFloatingWindowOpen);
-    setIsPopoverOpen(!isPopoverOpen);
+    setIsDialogOpen(false);
   }
 
   return (
     <>
-      <Popover placement="left" backdrop="blur" isOpen={isPopoverOpen}>
-        <PopoverTrigger>
-          <Button color="secondary" onClick={togglePopover}>New Timer</Button>
-        </PopoverTrigger>
-        <PopoverContent >
-            <StableTimer
-              projectSalary={projectSalary}
-              isTimerRunning={isTimerRunning}
-              time={newTime + totalTime}
-              startTimer={startTimer}
-              pauseTimer={pauseTimer}
-              stopTimer={stopTimer}
-              formState={formState}
-              toggleFloatingWindow={toggleFloatingWindow}
-              togglePopover={togglePopover}
-            />
-        </PopoverContent>
-      </Popover>
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogTrigger>
+          <Button color="secondary" onClick={toggleDialog}>
+            New Timer
+          </Button>
+        </DialogTrigger>
+        <DialogContent onInteractOutside={(e) => e.preventDefault()}>
+          <div className="py-4 flex flex-col items-center">
+            <p className="text-center text-2xl font-bold">Timer</p>
+            <div className="text-center py-7 text-foreground">
+              <p>{(projectSalary * (newTime + totalTime) / 3600).toFixed(2)} $</p>
+              <h1 className="text-2xl p-4">{displayTime(newTime + totalTime)}</h1>
+              {!isTimerRunning ? (
+                <div className="flex gap-5 justify-center">
+                  <StartButton timerFunction={startTimer} />
+                </div>
+              ) : (
+                <div className="flex gap-5 justify-center">
+                  <PauseButton timerFunction={pauseTimer} />
+                  <StopButton timerFunction={stopTimer} />
+                </div>
+              )}
+              {formState?.errors._form ? (
+                <div className="rounded p-2 bg-red-200 border border-red-400">
+                  {formState?.errors._form?.join(', ')}
+                </div>
+              ) : null}
+            </div>
+            <div className="pt-8">
+              {/* <Button onClick={toggleFloatingWindow}>Open Floating Timer</Button> */}
+              <Button variant="destructive" onClick={toggleDialog}>Cancel</Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
       {isFloatingWindowOpen && (
-        <FloatingTimer 
-            onClose={toggleFloatingWindow}
-            projectSalary={projectSalary}
-            isTimerRunning={isTimerRunning}
-            time={newTime + totalTime}
-            startTimer={startTimer}
-            pauseTimer={pauseTimer}
-            stopTimer={stopTimer}
-            formState={formState}
+        <FloatingTimer
+          onClose={toggleFloatingWindow}
+          projectSalary={projectSalary}
+          isTimerRunning={isTimerRunning}
+          time={newTime + totalTime}
+          startTimer={startTimer}
+          pauseTimer={pauseTimer}
+          stopTimer={stopTimer}
+          formState={formState}
         />
       )}
     </>
