@@ -4,7 +4,7 @@ import { db } from "@/db";
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import paths from '@/paths';
-import { timerProjects, timerSessions } from "../../../drizzle/schema";
+import { timerProjects, timerSessions } from "drizzle/schema";
 import { eq } from 'drizzle-orm';
 
 interface DeleteProjectProps {

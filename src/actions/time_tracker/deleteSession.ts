@@ -3,7 +3,7 @@
 import { db } from "@/db";
 import { revalidatePath } from 'next/cache';
 import paths from "@/paths"
-import { timerSessions } from "../../../drizzle/schema";
+import { timerSessions } from "drizzle/schema";
 import { eq } from 'drizzle-orm';
 
 

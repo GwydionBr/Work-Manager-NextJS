@@ -4,7 +4,7 @@ import { db } from "@/db";
 import { revalidatePath } from 'next/cache';
 import paths from '@/paths';
 import { redirect } from "next/navigation";
-import { timerSessions } from "../../../drizzle/schema";
+import { timerSessions } from "drizzle/schema";
 
 interface CreateTimerSessionProps {
   time_spent: number;

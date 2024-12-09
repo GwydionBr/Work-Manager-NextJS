@@ -5,7 +5,7 @@ import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import paths from '@/paths';
-import { dienstPlan } from "../../../drizzle/schema";
+import { dienstPlan } from "drizzle/schema";
 import { auth } from '@/auth';
 
 const createProjectSchema = z.object({
