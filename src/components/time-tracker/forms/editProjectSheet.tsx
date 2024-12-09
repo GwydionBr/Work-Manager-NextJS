@@ -9,10 +9,10 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet"
-import { Separator } from "@/components/ui/separator"
+} from "@/components/ui/sheet";
+import { Separator } from "@/components/ui/separator";
 import { Input } from '@nextui-org/react';
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import * as actions from '@/actions';
 import { z } from 'zod';
@@ -41,7 +41,7 @@ const createProjectSchema = z.object({
 });
 
 export default function EditProjectSheet({ project }: EditProjectSheetProps) {
-
+  const [isOpen, setIsOpen] = useState(false); // Sheet State
   const [formState, setFormState] = useState<EditProjectFormState>({ errors: {} });
   const [projectName, setProjectName] = useState(project.projectName);
   const [projectDescription, setProjectDescription] = useState(project.projectDescription);
@@ -58,7 +58,6 @@ export default function EditProjectSheet({ project }: EditProjectSheetProps) {
   }
 
   async function handleSubmit() {
-
     const projectData = {
       projectName,
       projectDescription,
@@ -82,7 +81,7 @@ export default function EditProjectSheet({ project }: EditProjectSheetProps) {
     });
 
     if (success) {
-      // togglePopover();
+      setIsOpen(false); // Schließe das Sheet
     } else {
       setFormState({
         errors: {
@@ -93,69 +92,70 @@ export default function EditProjectSheet({ project }: EditProjectSheetProps) {
   }
 
   return (
-    <Sheet>
-      <SheetTrigger>
+    <Sheet open={isOpen} onOpenChange={setIsOpen}>
+      <SheetTrigger onClick={() => setIsOpen(true)}>
         <MoreHorizIcon />
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
           <SheetTitle>
             <div className="flex gap-8">
-              Project: "{project.projectName}" 
-              <DeleteProjectButton projectId={project.id}/>
+              Project: "{project.projectName}"
+              <DeleteProjectButton projectId={project.id} />
             </div>
           </SheetTitle>
           <SheetDescription>
             Edit project details. Or delete the project.
           </SheetDescription>
         </SheetHeader>
-          <div className="flex flex-col items-center gap-5 p-3">
-            <Input
-              value={projectName}
-              onChange={handleNameChange}
-              name="projectName"
-              label="Project Name:"
-              labelPlacement="outside"
-              placeholder="Enter project name"
-              isInvalid={!!formState?.errors.projectName}
-              errorMessage={formState?.errors.projectName?.join(', ')}
-            />
-            <Input 
-              value={projectDescription}
-              onChange={handleDescriptionChange}
-              name="projectDescription"
-              label="Project Description:"
-              labelPlacement="outside"
-              placeholder="Enter project description"
-              isInvalid={!!formState?.errors.projectDescription}
-              errorMessage={formState?.errors.projectDescription?.join(', ')}
-            />
-            <Input
-              value={projectSalary}
-              onChange={handleSalaryChange}
-              type="number"
-              name="projectSalary"
-              label="Project Salary:"
-              labelPlacement="outside"
-              placeholder="0.00"
-              isInvalid={!!formState?.errors.projectSalary}
-              errorMessage={formState?.errors.projectSalary?.join(', ')}
-            />
+        <div className="flex flex-col items-center gap-5 p-3">
+          <Input
+            value={projectName}
+            onChange={handleNameChange}
+            name="projectName"
+            label="Project Name:"
+            labelPlacement="outside"
+            placeholder="Enter project name"
+            isInvalid={!!formState?.errors.projectName}
+            errorMessage={formState?.errors.projectName?.join(', ')}
+          />
+          <Input
+            value={projectDescription}
+            onChange={handleDescriptionChange}
+            name="projectDescription"
+            label="Project Description:"
+            labelPlacement="outside"
+            placeholder="Enter project description"
+            isInvalid={!!formState?.errors.projectDescription}
+            errorMessage={formState?.errors.projectDescription?.join(', ')}
+          />
+          <Input
+            value={projectSalary}
+            onChange={handleSalaryChange}
+            type="number"
+            name="projectSalary"
+            label="Project Salary:"
+            labelPlacement="outside"
+            placeholder="0.00"
+            isInvalid={!!formState?.errors.projectSalary}
+            errorMessage={formState?.errors.projectSalary?.join(', ')}
+          />
 
-              {formState?.errors._form ? (
-              <div className="rounded p-2 bg-red-200 border border-red-400">
-                {formState?.errors._form?.join(', ')}
-              </div>
-            ) : null}
+          {formState?.errors._form ? (
+            <div className="rounded p-2 bg-red-200 border border-red-400">
+              {formState?.errors._form?.join(', ')}
+            </div>
+          ) : null}
 
-            <Button color="primary" onClick={handleSubmit}>Edit Project</Button>
-            <SheetClose>
-              <Button color="danger">Cancel</Button>
-            </SheetClose>
-            <Separator className="mt-10"/>
+          <Button color="primary" onClick={handleSubmit}>
+            Edit Project
+          </Button>
+          <SheetClose>
+            <Button variant="destructive">Cancel</Button>
+          </SheetClose>
+          <Separator className="mt-10" />
         </div>
       </SheetContent>
     </Sheet>
-
   );
 }
