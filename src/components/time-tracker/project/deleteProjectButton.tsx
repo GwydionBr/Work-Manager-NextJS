@@ -20,8 +20,8 @@ export default function DeleteProjectButton({ projectId }: DeleteProjectButtonPr
 
   return (
     <form action={action}>
-          <Button variant="destructive" size="sm" type="submit">
-            <DeleteIcon />
+          <Button variant="destructive" size="sm" type="submit" className="w-7 h-8">
+            <DeleteIcon className="w-6 h-6"/>
           </Button>
           {formState.errors._form && formState.errors._form.length > 0 && (
             <div className="rounded p-2 bg-red-200 border border-red-400">
