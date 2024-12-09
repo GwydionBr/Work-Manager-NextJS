@@ -33,6 +33,9 @@ const paths = {
     },
     newWG() {
       return '/wg/newWG';
+    },
+    showWG(wgId: number) {
+      return `/wg/${wgId}`;
     }
   },
     
