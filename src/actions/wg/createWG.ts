@@ -13,18 +13,19 @@ interface CreateWgProps {
   wgDescription: string;
 }
 
-export async function createWG(
-  newWG: CreateWgProps
-) {
+export async function createWG( newWG: CreateWgProps ) {
 
+  // Check if user is authenticated
   const session = await auth();
   const user = session?.user;
   if (!session || !user) {
     redirect(paths.home());
   }
 
+  // Insert new WG into database
   const { wgName, wgDescription } = newWG;
   let createdWg;
+
   try{
     createdWg = await db.insert(wg).values({
         name: wgName,
@@ -32,7 +33,7 @@ export async function createWG(
     }).returning();
   } catch (err: any) {
     console.error(err);
-    return {failure: true};
+    return false;
   }
 
   revalidatePath(paths.wgGame.wg());

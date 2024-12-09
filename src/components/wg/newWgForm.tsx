@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import { useState } from "react"
-
-import { toast } from "@/hooks/use-toast"
-import { Button } from "@/components/ui/button"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { useState } from "react";
+import { Loader2 } from "lucide-react"
+import { toast } from "@/hooks/use-toast";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -15,21 +15,21 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import * as actions from "@/actions"
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import * as actions from "@/actions";
+
 
 const FormSchema = z.object({
   wgName: z.string().min(2, {
     message: "Der Name muss mindestens 2 Zeichen lang sein",
   }),
   wgDescription: z.string(),
-})
-
+});
 
 
 export default function NewWgForm() {
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -37,45 +37,50 @@ export default function NewWgForm() {
       wgName: "",
       wgDescription: "",
     },
-  })
+  });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
-      const response = await actions.createWG(data)
-      if (response.failure) {
-        console.log("Error creating WG")
-        toast({
-          title: "Fehler",
-          description: "Es gab ein Problem beim Erstellen deiner WG.",
-        })
-      }
+      await actions.createWG(data);
+      toast({
+        description: "Deine WG wurde erfolgreich erstellt!",
+      });
     } catch (error) {
-      console.error(error)
+      console.error(error);
       toast({
         title: "Fehler",
         description: "Es gab ein Problem beim Erstellen deiner WG.",
-      })
+      });
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
   }
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="max-w-md mx-auto p-6 border border-gray-300 dark:border-gray-700 rounded-lg shadow-md bg-white dark:bg-gray-900">
+      <h2 className="text-xl font-semibold text-center text-gray-800 dark:text-gray-100 mb-4">
+        Neue WG erstellen
+      </h2>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 flex flex-col gap-8 w-auto pt-10">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <FormField
             control={form.control}
             name="wgName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Wie soll deine WG heißen?</FormLabel>
+                <FormLabel className="text-gray-700 dark:text-gray-300">
+                  Wie soll deine WG heißen?
+                </FormLabel>
                 <FormControl>
-                  <Input placeholder="WG Name" {...field} />
+                  <Input
+                    placeholder="WG Name"
+                    {...field}
+                    className="border-gray-300 dark:border-gray-600"
+                  />
                 </FormControl>
-                <FormDescription>
-                    Keine Sorge, du kannst den Namen später noch ändern.
+                <FormDescription className="text-sm text-gray-500 dark:text-gray-400">
+                  Keine Sorge, du kannst den Namen später noch ändern.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -86,19 +91,29 @@ export default function NewWgForm() {
             name="wgDescription"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Willst du noch eine Beschreibung hinzufügen?</FormLabel>
+                <FormLabel className="text-gray-700 dark:text-gray-300">
+                  Willst du noch eine Beschreibung hinzufügen?
+                </FormLabel>
                 <FormControl>
-                  <Input placeholder="Beschreibung" {...field} />
+                  <Input
+                    placeholder="Beschreibung"
+                    {...field}
+                    className="border-gray-300 dark:border-gray-600"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button type="submit" disabled={isLoading}>
-            {isLoading ? "Lädt..." : "Erstellen"}
+          <Button
+            type="submit"
+            disabled={isLoading}
+            className="w-full py-2 text-center"
+          >
+            {isLoading ? <Loader2 className="animate-spin" /> : "Erstellen"}
           </Button>
         </form>
       </Form>
     </div>
-  )
+  );
 }
