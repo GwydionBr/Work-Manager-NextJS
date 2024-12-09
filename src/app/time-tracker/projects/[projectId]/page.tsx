@@ -1,14 +1,11 @@
 import paths from "@/paths";
 import NewSessionForm from "@/components/time-tracker/forms/newSessionForm";
-import DeleteProjectButton from "@/components/time-tracker/project/deleteProjectButton";
 import * as actions from "@/actions";
 import ListSessions from "@/components/time-tracker/session/listSessions";
 import NewTimerForm from "@/components/time-tracker/forms/newTimerForm";
-import EditProjectSheet from "@/components/time-tracker/forms/editProjectSheet";
 import type { TimerSession } from '@/types';
 import { db } from '@/db';
 import { eq } from "drizzle-orm";
-import HeroHeader from "@/components/heroHeader";
 import HeroHeaderProject from "@/components/time-tracker/project/heroHeaderProject";
 import ReturnButton from "@/components/common/returnButton";
 
@@ -57,7 +54,9 @@ export default async function ProjectPage({ params }: ProjectShowPageProps) {
         <div className="self-center justify-self-center">
           {
           project &&
-           <NewTimerForm projectId={projectId} projectSalary={project.projectSalary} redirectStatus={false}/>
+          <div className="fixed top-1/2 transform -translate-y-1/2">
+            <NewTimerForm projectId={projectId} projectSalary={project.projectSalary} redirectStatus={false}/>
+          </div>
           }
         </div>
         </div>
