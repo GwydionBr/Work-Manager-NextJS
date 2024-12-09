@@ -1,17 +1,34 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { useState } from "react";
+import { z } from "zod";
+import { toast } from "@/hooks/use-toast";
+import { Loader2 } from "lucide-react";
 import {
-  Input,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-} from '@nextui-org/react';
-import { Button } from "@/components/ui/button"
-import { useState } from 'react';
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { DatePicker } from "@nextui-org/date-picker";
 import * as actions from '@/actions/time_tracker/createSession';
 import { CalendarDate } from '@internationalized/date';
-import { z } from 'zod';
+import AddIcon from '@mui/icons-material/Add';
 
 const createSessionSchema = z.object({
   loggedDate: z.string().min(10),
@@ -23,137 +40,151 @@ interface NewSessionFormProps {
   projectId: number;
 }
 
-interface NewSessionFormState {
-  errors: {
-    loggedDate?: string[];
-    loggedHours?: string[];
-    loggedMinutes?: string[];
-    _form?: string[];
-  };
-}
-
 export default function NewSessionForm({ projectId }: NewSessionFormProps) {
   const today = new Date();
   const todayValue = new CalendarDate(today.getFullYear(), today.getMonth() + 1, today.getDate());
- 
-  const [loggedDate, setLoggedDate] = useState<CalendarDate>(todayValue);
-  const [loggedHours, setLoggedHours] = useState<string>("0");
-  const [loggedMinutes, setLoggedMinutes] = useState<string>("0");
-  const [formState, setFormState] = useState<NewSessionFormState>({ errors: {} });
-  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+  
+  const [isLoading, setIsLoading] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  function togglePopover() {
-    setIsPopoverOpen(!isPopoverOpen);
-  }
+  const form = useForm<z.infer<typeof createSessionSchema>>({
+    resolver: zodResolver(createSessionSchema),
+    defaultValues: {
+      loggedDate: todayValue.toString(),
+      loggedHours: 0,
+      loggedMinutes: 0,
+    },
+  });
 
-  function handleMinuteChange(e: any) {
-    setLoggedMinutes(e.target.value);
-  }
-  function handleHourChange(e: any) {
-    setLoggedHours(e.target.value);
-  }
-  function handleDateChange(date: CalendarDate) {
-    setLoggedDate(date);
-  }
-
-  async function handleSubmit(e: any) {
-    e.preventDefault(); // Form-Submit-Verhalten verhindern
-
-    const result = createSessionSchema.safeParse({
-      loggedDate: loggedDate.toString(),
-      loggedHours: Number(loggedHours),
-      loggedMinutes: Number(loggedMinutes),
-    });
-
-
-    if (!result.success) {
-      setFormState({
-        errors: result.error.flatten().fieldErrors,
-      });
-      return;
-    }
-    
+  async function onSubmit(data: z.infer<typeof createSessionSchema>) {
+    setIsLoading(true);
     try {
       const newSession = {
         projectId: projectId,
-        loggedDate: new Date(loggedDate.toString()),
-        loggedHours: Number(loggedHours),
-        loggedMinutes: Number(loggedMinutes),
-      }
+        loggedDate: new Date(data.loggedDate),
+        loggedHours: data.loggedHours,
+        loggedMinutes: data.loggedMinutes,
+      };
 
       const status = await actions.createSession(newSession);
 
       if (status) {
-        setLoggedDate(todayValue);
-        setLoggedHours("0");
-        setLoggedMinutes("0");
-        setFormState({ errors: {} });
-        togglePopover();
+        toast({
+          description: "Your session was successfully created!",
+        });
+        form.reset();
+        setIsDialogOpen(false); // Close the dialog
       } else {
-        setFormState({
-          errors: {
-            _form: ['Failed to create session']
-          }
+        toast({
+          title: "Error",
+          description: "Failed to create session.",
         });
       }
-    } catch (err: unknown) {
-      console.error(err);
-      setFormState({
-        errors: {
-          _form: ['Failed to create session']
-        }
+    } catch (error) {
+      console.error(error);
+      toast({
+        title: "Error",
+        description: "There was a problem creating your session.",
       });
+    } finally {
+      setIsLoading(false);
     }
   }
 
-  return(
-    <Popover placement="bottom" backdrop="blur" isOpen={isPopoverOpen}>
-      <PopoverTrigger>
-        <Button variant="default" onClick={togglePopover}>New Session</Button>
-      </PopoverTrigger>
-      <PopoverContent>
-        <div className="flex flex-col gap-4 p-4">
-          <DatePicker   
-            value={loggedDate}
-            onChange={handleDateChange}
-            name="loggedDate" 
-            label="Date of Work" 
-            labelPlacement="outside" 
-            isInvalid={!!formState?.errors.loggedDate}
-            errorMessage={formState?.errors.loggedDate?.join(', ')}
-          />
-          <Input 
-            name="loggedHours" 
-            value={loggedHours}
-            onChange={handleHourChange}
-            label="Hours:" 
-            labelPlacement="outside" 
-            type="number" 
-            placeholder='0' 
-            isInvalid={!!formState?.errors.loggedHours}
-            errorMessage={formState?.errors.loggedHours?.join(', ')}
-          />
-          <Input 
-            name="loggedMinutes" 
-            value={loggedMinutes}
-            onChange={handleMinuteChange}
-            label="Minutes:" 
-            labelPlacement="outside" 
-            type="number" 
-            placeholder='0' 
-            isInvalid={!!formState?.errors.loggedMinutes}
-            errorMessage={formState?.errors.loggedMinutes?.join(', ')}
-          />
-          {formState?.errors._form ? (
-            <div className="rounded p-2 bg-red-200 border border-red-400">
-              {formState?.errors._form?.join(', ')}
-            </div>
-          ) : null}
-          <Button onClick={handleSubmit} className="mt-8">Create Session</Button>
-          <Button variant="destructive" onClick={togglePopover}>Cancel</Button>
+  return (
+    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+      <DialogTrigger>
+        <div className={buttonVariants({ variant: "secondary" })}>
+          <AddIcon />
+          New Session
         </div>
-          
-      </PopoverContent>
-    </Popover>
-  )
+      </DialogTrigger>
+
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Create New Session</DialogTitle>
+          <DialogDescription>
+            Create a new session by filling out the form below.
+          </DialogDescription>
+        </DialogHeader>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <FormField
+              control={form.control}
+              name="loggedDate"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-gray-700 dark:text-gray-300">
+                    Date of Work
+                  </FormLabel>
+                  <FormControl>
+                    <DatePicker
+                      value={new CalendarDate(
+                        new Date(field.value).getFullYear(),
+                        new Date(field.value).getMonth() + 1,
+                        new Date(field.value).getDate()
+                      )}
+                      onChange={(date) => field.onChange(date.toString())}
+                      name="loggedDate"
+                      labelPlacement="outside"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="loggedHours"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-gray-700 dark:text-gray-300">
+                    Hours
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      placeholder="0"
+                      {...field}
+                      onChange={(e) => field.onChange(Number(e.target.value))}
+                      className="border-gray-300 dark:border-gray-600"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="loggedMinutes"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-gray-700 dark:text-gray-300">
+                    Minutes
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      placeholder="0"
+                      {...field}
+                      onChange={(e) => field.onChange(Number(e.target.value))}
+                      className="border-gray-300 dark:border-gray-600"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button
+              type="submit"
+              disabled={isLoading}
+              className="w-full py-2 text-center"
+            >
+              {isLoading ? <Loader2 className="animate-spin" /> : "Create Session"}
+            </Button>
+          </form>
+        </Form>
+      </DialogContent>
+    </Dialog>
+  );
 }
