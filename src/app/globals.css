@@ -78,3 +78,8 @@
     --chart-5: 340 75% 55%;
   }
 }
+
+
+.largeIcon {
+  font-size: 4rem !important; /* Vergrößern des Icons */
+}

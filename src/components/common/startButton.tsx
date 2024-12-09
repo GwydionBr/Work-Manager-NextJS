@@ -9,8 +9,12 @@ interface StartButtonProps {
 export default function StartButton({ timerFunction }: StartButtonProps) {
   return (
     <Zoom in={true}>
-      <IconButton onClick={timerFunction} aria-label="start" color="primary">
-        <PlayCircleIcon fontSize='large'/>
+      <IconButton
+        onClick={timerFunction}
+        aria-label="start"
+        color="success"
+      >
+        <PlayCircleIcon className="largeIcon" />
       </IconButton>
     </Zoom>
   );
