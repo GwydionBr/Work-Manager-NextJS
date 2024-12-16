@@ -1,7 +1,6 @@
 import HeroHeader from '@/components/heroHeader';
 import NewProjectForm from '@/components/time-tracker/forms/newProjectForm';
 import ListProjects from '@/components/time-tracker/project/listProjects';
-import { Button } from "@/components/ui/button"
 import { buttonVariants } from '@/components/ui/button';
 import Link from "next/link";
 import paths from "@/paths";
