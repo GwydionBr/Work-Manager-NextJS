@@ -12,12 +12,15 @@ import postgres from "postgres"
 import { drizzle } from "drizzle-orm/postgres-js"
 import type { AdapterAccountType } from "next-auth/adapters"
 import { relations } from 'drizzle-orm';
+import { title } from "process";
  
 const connectionString = process.env.POSTGRES_URL!
 const pool = postgres(connectionString, { max: 1 })
  
 export const db = drizzle(pool)
 
+
+// ------------------------------------------------------------------------------------------
 // Authentification
 
 export const test = pgTable("test", {
@@ -105,7 +108,9 @@ export const authenticators = pgTable(
   })
 )
 
-// Time Tracker
+
+// ------------------------------------------------------------------------------------------
+// Work Manager
 
 export const timerProjects = pgTable("timerProject", {
   id: serial("id").primaryKey(),
@@ -136,6 +141,38 @@ export const timerProjectRelations = relations(timerProjects, ({ many }) => ({
   timerSessions: many(timerSessions),
 }));
 
+export const spendings = pgTable("spending", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  amount: doublePrecision("amount").notNull(),
+  description: text("description"),
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+})
+
+export const spendingsRelations = relations(users, ({ many }) => ({
+  spendings: many(spendings),
+}));
+
+export const monthEarnings = pgTable("earning", {
+  id: serial("id").primaryKey(),
+  month: integer("month").notNull(),
+  year: integer("year").notNull(),
+  amount: doublePrecision("amount").notNull(),
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+})
+
+export const monthEarningsRelations = relations(users, ({ many }) => ({
+  earnings: many(monthEarnings),
+}));
+
+
+// ------------------------------------------------------------------------------------------
+// Dienstplan
+
 export const dienstPlan = pgTable("dienstPlan", {
   id: serial("id").primaryKey(),
   name: text("name").notNull(),
@@ -144,9 +181,6 @@ export const dienstPlan = pgTable("dienstPlan", {
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
 })
-
-
-// Dienstplan
 
 export const dienstPlanRelations = relations(dienstPlan, ({ many }) => ({
   fixedWorkers: many(fixedWorker),
@@ -181,6 +215,8 @@ export const relativeWorkerRelations = relations(relativeWorker, ({ one }) => ({
 }));
 
 
+
+// ------------------------------------------------------------------------------------------
 // WG
 
 export const wg = pgTable("wg", {
@@ -205,6 +241,7 @@ export const wgTask = pgTable("wgTask", {
     .notNull()
     .references(() => wg.id, { onDelete: "cascade" }),
 });
+
 
 export const wgRelations = relations(wg, ({ many }) => ({
   wgMembers: many(wgMember),

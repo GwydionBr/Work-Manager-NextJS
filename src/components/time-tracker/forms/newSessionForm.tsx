@@ -26,14 +26,14 @@ import {
 import { buttonVariants } from "@/components/ui/button";
 import { Button } from "@/components/ui/button";
 import { DatePicker } from "@nextui-org/date-picker";
-import * as actions from '@/actions/time_tracker/createSession';
-import { CalendarDate } from '@internationalized/date';
-import AddIcon from '@mui/icons-material/Add';
+import * as actions from "@/actions/work-manager/createSession";
+import { CalendarDate } from "@internationalized/date";
+import AddIcon from "@mui/icons-material/Add";
 
 const createSessionSchema = z.object({
   loggedDate: z.string().min(10),
   loggedHours: z.number().int().min(0),
-  loggedMinutes: z.number().int().min(0).max(59)
+  loggedMinutes: z.number().int().min(0).max(59),
 });
 
 interface NewSessionFormProps {
@@ -42,8 +42,12 @@ interface NewSessionFormProps {
 
 export default function NewSessionForm({ projectId }: NewSessionFormProps) {
   const today = new Date();
-  const todayValue = new CalendarDate(today.getFullYear(), today.getMonth() + 1, today.getDate());
-  
+  const todayValue = new CalendarDate(
+    today.getFullYear(),
+    today.getMonth() + 1,
+    today.getDate()
+  );
+
   const [isLoading, setIsLoading] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
@@ -119,11 +123,13 @@ export default function NewSessionForm({ projectId }: NewSessionFormProps) {
                   </FormLabel>
                   <FormControl>
                     <DatePicker
-                      value={new CalendarDate(
-                        new Date(field.value).getFullYear(),
-                        new Date(field.value).getMonth() + 1,
-                        new Date(field.value).getDate()
-                      )}
+                      value={
+                        new CalendarDate(
+                          new Date(field.value).getFullYear(),
+                          new Date(field.value).getMonth() + 1,
+                          new Date(field.value).getDate()
+                        )
+                      }
                       onChange={(date) => field.onChange(date.toString())}
                       name="loggedDate"
                       labelPlacement="outside"
@@ -180,7 +186,11 @@ export default function NewSessionForm({ projectId }: NewSessionFormProps) {
               disabled={isLoading}
               className="w-full py-2 text-center"
             >
-              {isLoading ? <Loader2 className="animate-spin" /> : "Create Session"}
+              {isLoading ? (
+                <Loader2 className="animate-spin" />
+              ) : (
+                "Create Session"
+              )}
             </Button>
           </form>
         </Form>

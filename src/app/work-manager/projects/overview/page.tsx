@@ -1,6 +1,4 @@
 import ListSessions from "@/components/time-tracker/session/listSessions";
-import { Link } from "@nextui-org/react";
-import { Button } from "@/components/ui/button"
 import paths from "@/paths";
 import type { TimerSession, TimerProject } from '@/types';
 import HeroHeader from "@/components/heroHeader";

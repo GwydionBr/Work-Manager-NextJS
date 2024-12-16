@@ -1,7 +1,6 @@
 import { Divider } from '@nextui-org/react';
 import DeleteSessionButton from '@/components/time-tracker/session/deleteSessionButton';
 import EditSessionForm from "@/components/time-tracker/forms/editSessionForm";
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ListTotalMoneyAndTime from '@/components/time-tracker/session/listTotalMoneyAndTime';
 // import type { TimerSession } from '@/types';
 import { format, getWeekOfMonth } from 'date-fns';
