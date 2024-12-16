@@ -1,6 +1,7 @@
 import HeroHeader from "@/components/heroHeader";
 import TwoValueBarChart from "@/components/common/graphs/twoValueBarChart";
 import TwoValueAreaChart from "@/components/common/graphs/twoValueAreaChart";
+import NewExpenseForm from "@/components/time-tracker/forms/newExpenseForm";
 import * as actions from "@/actions";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
@@ -21,20 +22,41 @@ export default async function CostManager() {
 
   const chartData: ChartDataProps[] = [];
 
-  const data = await actions.getMonthEarnings({ userId: user.id ? String(user.id) : "" });
-  for (let i = 0; i < data.length; i++) {
+  const earnings = await actions.getMonthEarnings({
+    userId: user.id ? String(user.id) : "",
+  });
+  for (let i = 0; i < earnings.length; i++) {
+    chartData.push({
+      name: earnings[i].month,
+      value_1: earnings[i].totalEarnings,
+      value_2: 0,
+    });
+  }
+
+  const expenses = await actions.getMonthExpenses({
+    userId: user.id ? String(user.id) : "",
+  });
+  console.log(expenses);
+  for (let i = 0; i < expenses.length; i++) {
+    const expenseMonth = expenses[i].month;
+    const expenseValue = expenses[i].totalExpenses;
+    const chartDataItem = chartData.find((item) => item.name === expenseMonth);
+    if (chartDataItem) {
+      chartDataItem.value_2 = expenseValue;
+    } else {
       chartData.push({
-        name: data[i].month,
-        value_1: data[i].totalEarnings,
-        value_2: 0,
+        name: expenseMonth,
+        value_1: 0,
+        value_2: expenseValue,
       });
     }
-  console.log(data);
+  }
 
   return (
     <div>
       <HeroHeader title="Cost Manager" />
       <div className="container mx-auto">
+        <NewExpenseForm />
         <div className="w-1/2">
           <TwoValueBarChart chartData={chartData} />
         </div>

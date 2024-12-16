@@ -1,10 +1,10 @@
 import ListSessions from "@/components/time-tracker/session/listSessions";
 import paths from "@/paths";
-import type { TimerSession, TimerProject } from '@/types';
+import type { TimerSession, TimerProject } from "@/types";
 import HeroHeader from "@/components/heroHeader";
-import { db } from '@/db';
-import { auth } from '@/auth';
-import { redirect } from 'next/navigation';
+import { db } from "@/db";
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
 import { eq, inArray } from "drizzle-orm";
 import ReturnButton from "@/components/common/returnButton";
 
@@ -34,24 +34,27 @@ export default async function OverviewPage() {
 
     // Füge die projectName Eigenschaft zu den Sessions hinzu
     sessions = rawSessions.map((session) => {
-      const project = projects.find((project) => project.id === session.projectId);
+      const project = projects.find(
+        (project) => project.id === session.projectId
+      );
       return {
         ...session,
         projectName: project ? project.projectName : "Unknown Project",
       };
     });
   } catch (error) {
-    console.error("Failed to fetch projects or sessions in Overview Page:", error);
+    console.error(
+      "Failed to fetch projects or sessions in Overview Page:",
+      error
+    );
   }
 
   return (
     <div>
-      <HeroHeader 
-        title="Overview"
-      />
-        <div className="px-8 pb-16">
-          <ReturnButton path={paths.workManager.showProjects()}/>
-        </div>
+      <HeroHeader title="Overview" />
+      <div className="px-8 pb-16">
+        <ReturnButton path={paths.workManager.showProjects()} />
+      </div>
       <div className="grid grid-cols-12">
         <div className="row-start-2 col-start-2 col-span-10">
           <ListSessions sessions={sessions} />

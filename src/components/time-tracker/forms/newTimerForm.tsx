@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import * as actions from "@/actions";
-import FloatingTimer from "@/components/time-tracker/floatingTimer"; 
+import FloatingTimer from "@/components/time-tracker/floatingTimer";
 import StartButton from "@/components/common/startButton";
 import PauseButton from "@/components/common/pauseButton";
 import StopButton from "@/components/common/stopButton";
@@ -14,7 +14,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTrigger,
-  DialogTitle
+  DialogTitle,
 } from "@/components/ui/dialog";
 
 interface NewTimerProps {
@@ -29,7 +29,11 @@ interface NewTimerFormState {
   };
 }
 
-export default function NewTimerForm({ projectId, projectSalary, redirectStatus }: NewTimerProps) {
+export default function NewTimerForm({
+  projectId,
+  projectSalary,
+  redirectStatus,
+}: NewTimerProps) {
   const [formState, setFormState] = useState<NewTimerFormState>({ errors: {} });
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isFloatingWindowOpen, setIsFloatingWindowOpen] = useState(false); // State für das Floating Window
@@ -81,7 +85,7 @@ export default function NewTimerForm({ projectId, projectSalary, redirectStatus 
     pauseTimer();
     const newSession = {
       time_spent: roundedTime,
-      money_earned: Number((projectSalary * roundedTime / 60).toFixed(2)),
+      money_earned: Number(((projectSalary * roundedTime) / 60).toFixed(2)),
       project_id: projectId,
       redirectStatus,
     };
@@ -115,7 +119,10 @@ export default function NewTimerForm({ projectId, projectSalary, redirectStatus 
     <>
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogTrigger>
-          <div className={buttonVariants({variant : "default"})} onClick={toggleDialog}>
+          <div
+            className={buttonVariants({ variant: "default" })}
+            onClick={toggleDialog}
+          >
             New Timer
           </div>
         </DialogTrigger>
@@ -123,8 +130,12 @@ export default function NewTimerForm({ projectId, projectSalary, redirectStatus 
           <div className="py-4 flex flex-col items-center">
             <p className="text-center text-2xl font-bold">Timer</p>
             <div className="text-center py-7 text-foreground">
-              <p>{(projectSalary * (newTime + totalTime) / 3600).toFixed(2)} $</p>
-              <h1 className="text-2xl p-4">{displayTime(newTime + totalTime)}</h1>
+              <p>
+                {((projectSalary * (newTime + totalTime)) / 3600).toFixed(2)} $
+              </p>
+              <h1 className="text-2xl p-4">
+                {displayTime(newTime + totalTime)}
+              </h1>
               {!isTimerRunning ? (
                 <div className="flex gap-5 justify-center">
                   <StartButton timerFunction={startTimer} />
@@ -137,13 +148,15 @@ export default function NewTimerForm({ projectId, projectSalary, redirectStatus 
               )}
               {formState?.errors._form ? (
                 <div className="rounded p-2 bg-red-200 border border-red-400">
-                  {formState?.errors._form?.join(', ')}
+                  {formState?.errors._form?.join(", ")}
                 </div>
               ) : null}
             </div>
             <div className="pt-8">
               {/* <Button onClick={toggleFloatingWindow}>Open Floating Timer</Button> */}
-              <Button variant="destructive" onClick={toggleDialog}>Cancel</Button>
+              <Button variant="destructive" onClick={toggleDialog}>
+                Cancel
+              </Button>
             </div>
           </div>
         </DialogContent>

@@ -26,7 +26,7 @@ import {
 import { buttonVariants } from "@/components/ui/button";
 import { Button } from "@/components/ui/button";
 import { DatePicker } from "@nextui-org/date-picker";
-import * as actions from "@/actions/work-manager/createSession";
+import * as actions from "@/actions/work-manager/Sessions/createSession";
 import { CalendarDate } from "@internationalized/date";
 import AddIcon from "@mui/icons-material/Add";
 
