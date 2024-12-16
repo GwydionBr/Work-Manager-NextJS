@@ -12,7 +12,6 @@ import postgres from "postgres"
 import { drizzle } from "drizzle-orm/postgres-js"
 import type { AdapterAccountType } from "next-auth/adapters"
 import { relations } from 'drizzle-orm';
-import { title } from "process";
  
 const connectionString = process.env.POSTGRES_URL!
 const pool = postgres(connectionString, { max: 1 })
@@ -146,6 +145,9 @@ export const spendings = pgTable("spending", {
   title: text("title").notNull(),
   amount: doublePrecision("amount").notNull(),
   description: text("description"),
+  monthly: boolean("monthly").notNull(),
+  startDate: timestamp("startDate", { mode: "date" }).notNull(),
+  endDate: timestamp("endDate", { mode: "date"}),
   userId: text("userId")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
@@ -153,20 +155,6 @@ export const spendings = pgTable("spending", {
 
 export const spendingsRelations = relations(users, ({ many }) => ({
   spendings: many(spendings),
-}));
-
-export const monthEarnings = pgTable("earning", {
-  id: serial("id").primaryKey(),
-  month: integer("month").notNull(),
-  year: integer("year").notNull(),
-  amount: doublePrecision("amount").notNull(),
-  userId: text("userId")
-    .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
-})
-
-export const monthEarningsRelations = relations(users, ({ many }) => ({
-  earnings: many(monthEarnings),
 }));
 
 
