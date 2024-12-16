@@ -36,6 +36,6 @@ export async function deleteProject(
     };
   }
 
-  revalidatePath(paths.timeTracker.timeTracker());
-  redirect(paths.timeTracker.timeTracker());
+  revalidatePath(paths.workManager.showProjects());
+  redirect(paths.workManager.showProjects());
 }

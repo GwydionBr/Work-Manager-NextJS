@@ -4,6 +4,8 @@ import { db } from '@/db';
 import paths from '@/paths';
 import EditProjectSheet from '../forms/editProjectSheet';
 import NewTimerForm from '@/components/time-tracker/forms/newTimerForm';
+import { Separator } from "@/components/ui/separator"
+import { buttonVariants } from "@/components/ui/button"
 import { eq } from "drizzle-orm";
 import {
   Accordion,
@@ -11,7 +13,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
-
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 export default async function ListProjects({ userId }: { userId: string }) {
   let projects;
@@ -25,7 +27,7 @@ export default async function ListProjects({ userId }: { userId: string }) {
     return <div>Failed to load projects.</div>;
   }
   
-  const renderedProjects = projects.map((project) => {
+  const renderedProjectsMobile = projects.map((project) => {
     return (
       <AccordionItem value={`${project.id}`} key={project.id} className="bg-card pr-4 my-2 rounded-md">
         <AccordionTrigger>
@@ -33,11 +35,9 @@ export default async function ListProjects({ userId }: { userId: string }) {
             <p className="col-span-3">{project.projectName}</p>
             <p>{project.projectSalary} $/h</p>
             <div className="col-span-3">
-              <Button size="sm" asChild>
-                <Link href={paths.timeTracker.showProject(project.id)}>
+                <Link href={paths.workManager.showProject(project.id)} className={buttonVariants({ variant: "secondary" })}>
                   View
                 </Link>
-              </Button>
             </div>
           </div>
         </AccordionTrigger>
@@ -52,10 +52,39 @@ export default async function ListProjects({ userId }: { userId: string }) {
     );
   });
 
-  return (
-    <Accordion type="single" collapsible className="pt-4">
-      {renderedProjects}
-    </Accordion>
+  const renderedProjectsDesktop = projects.map((project) => {
+    return (
+      <Card key={project.id} className="pr-4 my-2 rounded-md">
+        <CardHeader>
+          <Link href={paths.workManager.showProject(project.id)}>
+            <div className="flex justify-between items-center">
+              <CardTitle className="text-center pb-3">{project.projectName}</CardTitle>
+              <p className="border-2 p-2 border-blue-700">{project.projectSalary} $/h</p>
+            </div>
+            <Separator />
+            <p className="pb-4">{project.projectDescription}</p>
+          </Link>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-2 gap-4 p-4">
+            <NewTimerForm projectId={project.id} projectSalary={project.projectSalary} redirectStatus={true}/>
+            <EditProjectSheet project={project}/>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  });
 
+  return (
+    <>
+      <div className="block lg:hidden">
+        <Accordion type="single" collapsible className="pt-4">
+          {renderedProjectsMobile}
+        </Accordion>
+      </div> 
+      <div className="hidden lg:grid lg:grid-cols-3 lg:gap-4">
+        {renderedProjectsDesktop}
+      </div>
+    </>
   );
 }

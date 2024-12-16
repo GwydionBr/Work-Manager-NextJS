@@ -52,7 +52,7 @@ export default async function OverviewPage() {
         title="Overview"
       />
         <div className="px-8 pb-16">
-          <ReturnButton path={paths.timeTracker.timeTracker()}/>
+          <ReturnButton path={paths.workManager.showProjects()}/>
         </div>
       <div className="grid grid-cols-12">
         <div className="row-start-2 col-start-2 col-span-10">

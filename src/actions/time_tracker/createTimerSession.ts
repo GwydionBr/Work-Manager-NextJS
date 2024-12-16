@@ -30,10 +30,10 @@ export async function createTimerSession(
     return false;
   }
 
-  revalidatePath(paths.timeTracker.showProject(project_id));
-  revalidatePath(paths.timeTracker.timeTracker());
+  revalidatePath(paths.workManager.showProject(project_id));
+  revalidatePath(paths.workManager.showProjects());
   if (redirectStatus) {
-    redirect(paths.timeTracker.showProject(project_id));
+    redirect(paths.workManager.showProject(project_id));
   }
   return true;
 }

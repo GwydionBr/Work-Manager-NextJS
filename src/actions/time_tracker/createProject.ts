@@ -40,5 +40,5 @@ export async function createProject(
   }
 
   revalidatePath('/time-tracker');
-  redirect(paths.timeTracker.showProject(project[0].id));
+  redirect(paths.workManager.showProject(project[0].id));
 }

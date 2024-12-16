@@ -35,7 +35,7 @@ export async function editProject(
 
 
   
-  revalidatePath(paths.timeTracker.timeTracker());
-  revalidatePath(paths.timeTracker.showProject(projectId));
+  revalidatePath(paths.workManager.showProjects());
+  revalidatePath(paths.workManager.showProject(projectId));
   return true;
 }

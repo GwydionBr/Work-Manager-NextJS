@@ -44,6 +44,6 @@ export async function editSession(
     return false;
   }
 
-  revalidatePath(paths.timeTracker.showProject(projectId));
+  revalidatePath(paths.workManager.showProject(projectId));
   return true;
 }

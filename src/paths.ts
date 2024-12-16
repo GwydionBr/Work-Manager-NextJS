@@ -3,16 +3,19 @@ const paths = {
     return '/';
   },
 
-  timeTracker: {
-    timeTracker() {
-      return '/time-tracker';
+  workManager: {
+    showProjects() {
+      return '/work-manager';
     },
     showProject(projectId: number) {
-      return `/time-tracker/projects/${projectId}`;
+      return `/work-manager/projects/${projectId}`;
     },
     overview() {
-      return 'time-tracker/projects/overview';
+      return 'work-manager/projects/overview';
     },
+    costManager() {
+      return 'work-manager/cost-manager';
+    }
   },
 
   dienstPlan: {

@@ -41,7 +41,7 @@ export default async function ProjectPage({ params }: ProjectShowPageProps) {
 
       <p className="text-xl font-bold text-center pt-8">{project?.projectSalary} $/h</p>
       <div className="flex justify-between p-7">
-        <ReturnButton path={paths.timeTracker.timeTracker()} />
+        <ReturnButton path={paths.workManager.showProjects()} />
       </div>
       <div className="flex flex-col gap-4 p-3 items-center">
         <div className="flex gap-4">

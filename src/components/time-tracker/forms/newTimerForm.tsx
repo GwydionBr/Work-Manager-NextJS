@@ -7,6 +7,7 @@ import FloatingTimer from "@/components/time-tracker/floatingTimer";
 import StartButton from "@/components/common/startButton";
 import PauseButton from "@/components/common/pauseButton";
 import StopButton from "@/components/common/stopButton";
+import { buttonVariants } from "@/components/ui/button";
 import { displayTime } from "@/assets/logicFunctions";
 import {
   Dialog,
@@ -114,9 +115,9 @@ export default function NewTimerForm({ projectId, projectSalary, redirectStatus 
     <>
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogTrigger>
-          <Button color="secondary" onClick={toggleDialog}>
+          <div className={buttonVariants({variant : "default"})} onClick={toggleDialog}>
             New Timer
-          </Button>
+          </div>
         </DialogTrigger>
         <DialogContent onInteractOutside={(e) => e.preventDefault()}>
           <div className="py-4 flex flex-col items-center">
