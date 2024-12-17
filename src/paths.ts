@@ -11,11 +11,14 @@ const paths = {
       return `/work-manager/projects/${projectId}`;
     },
     overview() {
-      return 'work-manager/projects/overview';
+      return '/work-manager/projects/overview';
     },
     costManager() {
-      return 'work-manager/cost-manager';
-    }
+      return '/work-manager/cost-manager';
+    },
+    expenses() {
+      return '/work-manager/cost-manager/expenses';
+    },
   },
 
   dienstPlan: {

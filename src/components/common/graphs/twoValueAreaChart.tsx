@@ -19,12 +19,12 @@ interface ChartDataProps {
 
 const chartConfig = {
   value_1: {
-    label: "Wert 1",
+    label: "Earnings",
     color: "#2563eb",
   },
   value_2: {
-    label: "Wert 2",
-    color: "#60a5fa",
+    label: "Expenses",
+    color: "#dc2626",
   },
 } satisfies ChartConfig;
 

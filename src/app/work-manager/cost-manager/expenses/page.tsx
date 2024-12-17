@@ -1,6 +1,5 @@
 import HeroHeader from "@/components/heroHeader";
-import NewProjectForm from "@/components/time-tracker/forms/newProjectForm";
-import ListProjects from "@/components/time-tracker/project/listProjects";
+import ListExpenses from "@/components/time-tracker/expenses/listExpenses";
 import ReturnButton from "@/components/common/returnButton";
 import NewExpenseForm from "@/components/time-tracker/forms/newExpenseForm";
 import paths from "@/paths";
@@ -21,6 +20,7 @@ export default async function TimeTracker() {
         <ReturnButton path={paths.workManager.costManager()} />
         <div className="flex flex-col gap-4 p-10 items-center">
           <NewExpenseForm />
+          <ListExpenses userId={user.id!} />
         </div>
       </div>
     </div>

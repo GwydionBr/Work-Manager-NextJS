@@ -166,7 +166,7 @@ export default function NewExpenseForm() {
               control={form.control}
               name="monthly"
               render={({ field }) => (
-                <FormItem className="flex gap-4 items-center"> 
+                <FormItem className="flex gap-4 items-center">
                   <FormLabel className="text-gray-700 dark:text-gray-300">
                     Is this a monthly expense?
                   </FormLabel>
@@ -206,7 +206,8 @@ export default function NewExpenseForm() {
                           selected={field.value}
                           onSelect={(date) => field.onChange(date)} // Ensure onSelect updates the field value
                           disabled={(date) =>
-                            date > new Date() || date < new Date("1900-01-01")
+                            date > new Date("2030 - 12 - 31") ||
+                            date < new Date("2015-01-01")
                           }
                         />
                       </PopoverContent>
@@ -243,7 +244,7 @@ export default function NewExpenseForm() {
                           onSelect={(date) => field.onChange(date)} // Ensure onSelect updates the field value
                           disabled={(date) =>
                             date > new Date("2030-12-31") ||
-                            date < new Date("1900-01-01")
+                            date < new Date("2015-01-01")
                           }
                         />
                       </PopoverContent>

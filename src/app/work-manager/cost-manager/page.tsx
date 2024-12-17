@@ -6,6 +6,7 @@ import * as actions from "@/actions";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import paths from "@/paths";
+import Link from "next/link";
 
 interface ChartDataProps {
   name: string;
@@ -36,7 +37,6 @@ export default async function CostManager() {
   const expenses = await actions.getMonthExpenses({
     userId: user.id ? String(user.id) : "",
   });
-  console.log(expenses);
   for (let i = 0; i < expenses.length; i++) {
     const expenseMonth = expenses[i].month;
     const expenseValue = expenses[i].totalExpenses;
@@ -55,13 +55,16 @@ export default async function CostManager() {
   return (
     <div>
       <HeroHeader title="Cost Manager" />
-      <div className="container mx-auto">
-        <NewExpenseForm />
-        <div className="w-1/2">
+      <div className="grid grid-cols-2 gap-4 p-10">
+        <div className="">
           <TwoValueBarChart chartData={chartData} />
-        </div>
-        <div className="w-1/2">
           <TwoValueAreaChart chartData={chartData} />
+        </div>
+        <div className="">
+          <NewExpenseForm />
+          <Link href={paths.workManager.expenses()}>
+            View Expenses
+          </Link>
         </div>
       </div>
     </div>
