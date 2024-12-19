@@ -1,4 +1,4 @@
-import HeroHeader from "@/components/heroHeader";
+import HeroHeader from "@/components/header/heroHeader";
 import NewProjectForm from "@/components/time-tracker/forms/newProjectForm";
 import ListProjects from "@/components/time-tracker/project/listProjects";
 import { buttonVariants } from "@/components/ui/button";

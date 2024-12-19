@@ -157,6 +157,19 @@ export const spendingsRelations = relations(users, ({ many }) => ({
   spendings: many(spendings),
 }));
 
+export const payouts = pgTable("payout", {
+  id: serial("id").primaryKey(),
+  amount: doublePrecision("amount").notNull(),
+  date: timestamp("date", { mode: "date" }).notNull(),
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+})
+
+export const payoutsRelations = relations(users, ({ many }) => ({
+  payouts: many(payouts),
+}));
+
 
 // ------------------------------------------------------------------------------------------
 // Dienstplan

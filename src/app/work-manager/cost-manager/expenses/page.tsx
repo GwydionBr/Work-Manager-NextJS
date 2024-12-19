@@ -1,4 +1,4 @@
-import HeroHeader from "@/components/heroHeader";
+import HeroHeader from "@/components/header/heroHeader";
 import ListExpenses from "@/components/time-tracker/expenses/listExpenses";
 import ReturnButton from "@/components/common/returnButton";
 import NewExpenseForm from "@/components/time-tracker/forms/newExpenseForm";

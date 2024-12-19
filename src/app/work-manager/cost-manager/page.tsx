@@ -1,4 +1,4 @@
-import HeroHeader from "@/components/heroHeader";
+import HeroHeader from "@/components/header/heroHeader";
 import TwoValueBarChart from "@/components/common/graphs/twoValueBarChart";
 import TwoValueAreaChart from "@/components/common/graphs/twoValueAreaChart";
 import NewExpenseForm from "@/components/time-tracker/forms/newExpenseForm";
@@ -62,9 +62,7 @@ export default async function CostManager() {
         </div>
         <div className="">
           <NewExpenseForm />
-          <Link href={paths.workManager.expenses()}>
-            View Expenses
-          </Link>
+          <Link href={paths.workManager.expenses()}>View Expenses</Link>
         </div>
       </div>
     </div>

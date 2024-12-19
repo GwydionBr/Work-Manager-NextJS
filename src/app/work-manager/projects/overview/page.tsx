@@ -1,7 +1,7 @@
 import ListSessions from "@/components/time-tracker/session/listSessions";
 import paths from "@/paths";
 import type { TimerSession, TimerProject } from "@/types";
-import HeroHeader from "@/components/heroHeader";
+import HeroHeader from "@/components/header/heroHeader";
 import { db } from "@/db";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
