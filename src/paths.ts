@@ -1,3 +1,5 @@
+import { payouts } from "drizzle/schema";
+
 const paths = {
   home() {
     return '/';
@@ -19,6 +21,9 @@ const paths = {
     expenses() {
       return '/work-manager/cost-manager/expenses';
     },
+    payout() {
+      return '/work-manager/payout';
+    }
   },
 
   dienstPlan: {

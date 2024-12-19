@@ -77,7 +77,7 @@ export default function NewSessionForm({ projectId }: NewSessionFormProps) {
           description: "Your session was successfully created!",
         });
         form.reset();
-        setIsDialogOpen(false); // Close the dialog
+        setIsDialogOpen(false);
       } else {
         toast({
           title: "Error",

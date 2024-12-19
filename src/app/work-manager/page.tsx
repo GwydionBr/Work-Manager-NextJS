@@ -18,12 +18,20 @@ export default async function TimeTracker() {
     <div>
       <HeroHeader title="Projects" />
       <div className="flex justify-between px-16">
-        <Link
-          href={paths.workManager.costManager()}
-          className={buttonVariants({ variant: "secondary" })}
-        >
-          Cost Manager
-        </Link>
+        <div className="flex gap-4">
+          <Link
+            href={paths.workManager.costManager()}
+            className={buttonVariants({ variant: "secondary" })}
+          >
+            Cost Manager
+          </Link>
+          <Link
+            href={paths.workManager.payout()}
+            className={buttonVariants({ variant: "secondary" })}
+          >
+            Payout
+          </Link>
+        </div>
         <Link
           href={paths.workManager.overview()}
           className={buttonVariants({ variant: "secondary" })}

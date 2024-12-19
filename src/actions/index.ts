@@ -13,3 +13,6 @@ export { createWG } from "./wg/createWG";
 export { getMonthEarnings } from "./work-manager/getMonthEarnings";
 export { createExpense } from "./work-manager/Expenses/createExpense";
 export { getMonthExpenses } from "./work-manager/getMonthExpenses";
+export { createPayout } from "./work-manager/payout/createPayout";
+export { deletePayout } from "./work-manager/payout/deletePayout";
+export { editPayout } from "./work-manager/payout/editPayout";
