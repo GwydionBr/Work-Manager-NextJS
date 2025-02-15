@@ -23,10 +23,16 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { format } from "date-fns";
+import { CalendarIcon } from "lucide-react";
+import { Calendar } from "@/components/ui/calendar";
 import { buttonVariants } from "@/components/ui/button";
 import { Button } from "@/components/ui/button";
-import { DatePicker } from "@nextui-org/date-picker";
-import { CalendarDate } from "@internationalized/date";
 import * as actions from "@/actions";
 import AddIcon from "@mui/icons-material/Add";
 
@@ -34,8 +40,9 @@ const FormSchema = z.object({
   amount: z.number().min(0, {
     message: "Amount must be a positive number",
   }),
-  date: z.string().refine((val) => !isNaN(Date.parse(val)), {
-    message: "Invalid date format",
+  date: z.date({
+    required_error: "Date is required",
+    invalid_type_error: "Invalid date format",
   }),
 });
 
@@ -47,7 +54,7 @@ export default function NewPayoutForm() {
     resolver: zodResolver(FormSchema),
     defaultValues: {
       amount: 0,
-      date: new Date().toISOString().split("T")[0], // Initialize with today's date
+      date: new Date()
     },
   });
 
@@ -58,10 +65,19 @@ export default function NewPayoutForm() {
         amount: data.amount,
         date: new Date(data.date),
       };
-      await actions.createPayout(newPayout);
-      toast({
-        description: "Your payout was successfully created!",
-      });
+      const response = await actions.createPayout(newPayout);
+      if (!response.success) {
+        toast({
+          title: "Error",
+          description: "There was a problem creating your payout.",
+        });
+      } else {
+        toast({
+          description: "Your payout was successfully created!",
+        });
+        form.reset();
+        setIsDialogOpen(false);
+      }
     } catch (error) {
       console.error(error);
       toast({
@@ -117,21 +133,32 @@ export default function NewPayoutForm() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-gray-700 dark:text-gray-300">
-                    Date
+                    Date: 
                   </FormLabel>
                   <FormControl>
-                    <DatePicker
-                      value={
-                        new CalendarDate(
-                          new Date(field.value).getFullYear(),
-                          new Date(field.value).getMonth() + 1,
-                          new Date(field.value).getDate()
-                        )
-                      }
-                      onChange={(date) => field.onChange(date.toString())}
-                      name="date"
-                      labelPlacement="outside"
-                    />
+                    <Popover>
+                      <PopoverTrigger>
+                        <div
+                          className={buttonVariants({ variant: "secondary" })}
+                        >
+                          {field.value
+                            ? format(new Date(field.value), "PPP")
+                            : "Pick a date"}
+                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                        </div>
+                      </PopoverTrigger>
+                      <PopoverContent>
+                        <Calendar
+                          mode="single"
+                          selected={field.value ? new Date(field.value) : undefined}
+                          onSelect={(date) => field.onChange(date)} 
+                          disabled={(date) =>
+                            date > new Date("2030 - 12 - 31") ||
+                            date < new Date("2015-01-01")
+                          }
+                        />
+                      </PopoverContent>
+                    </Popover>
                   </FormControl>
                   <FormMessage />
                 </FormItem>

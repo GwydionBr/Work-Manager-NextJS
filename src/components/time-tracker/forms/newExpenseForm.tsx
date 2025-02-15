@@ -5,8 +5,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { z } from "zod";
 import { toast } from "@/hooks/use-toast";
-import { Loader2 } from "lucide-react";
-import { CalendarIcon } from "lucide-react";
+import { Loader2, CalendarIcon } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import {
   Form,
@@ -53,6 +52,8 @@ const FormSchema = z.object({
 export default function NewExpenseForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isStartDatePopoverOpen, setIsStartDatePopoverOpen] = useState(false);
+  const [isEndDatePopoverOpen, setIsEndDatePopoverOpen] = useState(false);
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -87,7 +88,15 @@ export default function NewExpenseForm() {
   }
 
   return (
-    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+    <Dialog
+      open={isDialogOpen}
+      onOpenChange={(open) => {
+        setIsDialogOpen(open);
+        if (!open) {
+          form.reset();
+        }
+      }}
+    >
       <DialogTrigger asChild>
         <div className={buttonVariants({ variant: "secondary" })}>
           <AddIcon />
@@ -189,7 +198,10 @@ export default function NewExpenseForm() {
                     When does this expense start?
                   </FormLabel>
                   <FormControl>
-                    <Popover>
+                    <Popover
+                      open={isStartDatePopoverOpen}
+                      onOpenChange={setIsStartDatePopoverOpen}
+                    >
                       <PopoverTrigger>
                         <div
                           className={buttonVariants({ variant: "secondary" })}
@@ -204,9 +216,12 @@ export default function NewExpenseForm() {
                         <Calendar
                           mode="single"
                           selected={field.value}
-                          onSelect={(date) => field.onChange(date)} // Ensure onSelect updates the field value
+                          onSelect={(date) => {
+                            field.onChange(date);
+                            setIsStartDatePopoverOpen(false); // Close the popover
+                          }}
                           disabled={(date) =>
-                            date > new Date("2030 - 12 - 31") ||
+                            date > new Date("2030-12-31") ||
                             date < new Date("2015-01-01")
                           }
                         />
@@ -226,7 +241,10 @@ export default function NewExpenseForm() {
                     When does this expense end? (Optional)
                   </FormLabel>
                   <FormControl>
-                    <Popover>
+                    <Popover
+                      open={isEndDatePopoverOpen}
+                      onOpenChange={setIsEndDatePopoverOpen}
+                    >
                       <PopoverTrigger>
                         <div
                           className={buttonVariants({ variant: "secondary" })}
@@ -241,7 +259,10 @@ export default function NewExpenseForm() {
                         <Calendar
                           mode="single"
                           selected={field.value}
-                          onSelect={(date) => field.onChange(date)} // Ensure onSelect updates the field value
+                          onSelect={(date) => {
+                            field.onChange(date);
+                            setIsEndDatePopoverOpen(false); // Close the popover
+                          }}
                           disabled={(date) =>
                             date > new Date("2030-12-31") ||
                             date < new Date("2015-01-01")

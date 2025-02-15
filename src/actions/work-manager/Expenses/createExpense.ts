@@ -6,6 +6,7 @@ import { redirect } from 'next/navigation';
 import paths from '@/paths';
 import { spendings } from "drizzle/schema";
 import { auth } from '@/auth';
+import { ServerOutput } from "@/types";
 
 
 interface CreateExpenseProps {
@@ -19,7 +20,7 @@ interface CreateExpenseProps {
 
 export async function createExpense(
   newExpense: CreateExpenseProps
-) {
+): Promise<ServerOutput> {
 
   // Check if user is authenticated
   const session = await auth();
@@ -43,8 +44,19 @@ export async function createExpense(
         endDate,
     }).returning();
   } catch (err: any) {
-    return false;
+    return {
+      success: false,
+      errors: {
+        message: err.message || 'Something went wrong',
+        },
+        };
   }
 
   revalidatePath(paths.workManager.costManager());
+  return {
+      success: true,
+      data: {
+        expense: expense[0],
+      },
+    };
 }

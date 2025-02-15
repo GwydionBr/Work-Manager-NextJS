@@ -6,6 +6,7 @@ import { redirect } from 'next/navigation';
 import paths from '@/paths';
 import { payouts } from "drizzle/schema";
 import { auth } from '@/auth';
+import { ServerOutput } from "@/types";
 
 interface CreatePayoutProps {
   amount: number;
@@ -14,7 +15,7 @@ interface CreatePayoutProps {
 
 export async function createPayout(
   newPayout: CreatePayoutProps
-) {
+): Promise<ServerOutput> {
 
   // Check if user is authenticated
   const session = await auth();
@@ -34,8 +35,19 @@ export async function createPayout(
         date,
     }).returning();
   } catch (err: any) {
-    return false;
+    return {
+      success: false,
+      errors: {
+        message: err.message || 'Something went wrong',
+      },
+    };
   }
 
   revalidatePath(paths.workManager.payout());
+  return {
+      success: true,
+      data: {
+        payout: payout[0],
+      },
+    };
 }

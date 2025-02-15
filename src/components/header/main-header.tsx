@@ -34,7 +34,7 @@ export default function Header() {
         />
         <NavbarBrand>
           <Link href="/" className="font-bold text-inherit">
-            Gwitsch
+            Home
           </Link>
         </NavbarBrand>
       </NavbarContent>

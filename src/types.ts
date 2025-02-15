@@ -10,3 +10,12 @@ export type Session = typeof schema.sessions.$inferSelect;
 export type Wg = typeof schema.wg.$inferSelect;
 export type WgUser = typeof schema.wgMember.$inferSelect;
 export type WgTask = typeof schema.wgTask.$inferSelect;
+
+
+export interface ServerOutput {
+  success: boolean;
+  data?: any;
+  errors?: {
+    message?: string[];
+  };
+}
